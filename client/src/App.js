@@ -9,6 +9,7 @@ import { authMiddleware } from './utils/auth';
 
 import logo from './logo.svg';
 import './App.css';
+import './index.css';
 
 const httpLink = new HttpLink({ uri: '/graphql' });
 const client = new ApolloClient({
