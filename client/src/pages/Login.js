@@ -5,12 +5,11 @@ import { Link } from 'react-router-dom';
 // import Auth from '../utils/auth';
 
 import Nav from '../components/Nav';
-import Header from '../components/Header'
 
 function Login(props) {
   return (
     <>
-
+      <p>Login</p>
     </>
   )
 }
