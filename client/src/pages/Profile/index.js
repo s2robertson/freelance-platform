@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 
 import ProfileForm from './ProfileForm';
 
-// import Header from '../../components/';
 import Nav from '../../components/Nav';
 import ProjectList from '../../components/ProjectList';
 import SearchBar from '../../components/SearchBar'; // unsure if we need this
