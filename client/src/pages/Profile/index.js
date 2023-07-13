@@ -19,7 +19,6 @@ function Profile() {
   const [editing, setEditing] = useState(true);
   return (
     <>
-      {`editing? ${editing}`}
       {editing ? (
         <ProfileForm user={user} />
       ) : null}
