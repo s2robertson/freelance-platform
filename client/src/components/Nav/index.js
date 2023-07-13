@@ -43,14 +43,17 @@ function Nav() {
                 {/* depending on whether the user is logged in or not, render 'login' or 'logout' in the nav bar */}
                 {loggedIn ? (
                   <li class="mr-2">
-                    <a href="#" class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300">Logout</a>
+                    <Link
+                      to="/logout"
+                      class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300">Logout
+                    </Link>
                   </li>
                 ) : (
                   <li class="mr-2">
-                    <a
-                      href="#"
-                      // onclick, clear the logout token (logout)
-                      class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300">Login</a>
+                    <Link
+                      to="/login"
+                      class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300">Login
+                    </Link>
                   </li>
                 )}
               </ul>
