@@ -12,27 +12,33 @@ const allSkills = [
 
 function SkillPicker({ skills, addSkill, removeSkill }) {
     const skillsList = useMemo(() => {
+        // console.log(`Filter allSkills against ${JSON.stringify(skills)}`);
         return allSkills.filter(skill => !skills.find(s => s._id === skill._id));
     }, [skills]);
 
-    const [selectedSkill, setSelectedSkill] = useState(skillsList[0]);
+    const [selectedIndex, setSelectedIndex] = useState(0);
     function onChangeSelected(e) {
-        setSelectedSkill(e.target.value);
+        setSelectedIndex(e.target.value);
     }
 
     return (
         <div>
-            <select value={selectedSkill} onChange={onChangeSelected}>
-                {skillsList.map(skill => <option value={skill} key={skill._id}>{skill.name}</option>)}
+            <select value={selectedIndex} onChange={onChangeSelected}>
+                {skillsList.map((skill, index) => <option value={index} key={skill._id}>{skill.name}</option>)}
             </select>
-            <button onClick={() => addSkill(selectedSkill)}>
+            <button 
+                onClick={() => {
+                    addSkill(skillsList[selectedIndex]);
+                    setSelectedIndex(0);
+                }}
+            >
                 Add Skill
             </button>
             <ul>
                 {skills.map(skill => (
                     <li key={skill._id}>
                         {skill.name}
-                        <button onClick={removeSkill(selectedSkill)}>
+                        <button onClick={() => removeSkill(skillsList[selectedIndex])}>
                             &times;
                         </button>
                     </li>
