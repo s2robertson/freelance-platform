@@ -28,8 +28,12 @@ const userSchema = new Schema({
     type: Boolean,
     required: true,
   },
+  profileDescription: {
+    type: String,
+    default: 'No description yet'
+  },
   // The skills field represents the skills associated with the user
-  Skills: [
+  skills: [
     {
       type: Schema.Types.ObjectId,
       ref: "Service",
