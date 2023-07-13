@@ -63,10 +63,27 @@ function Signup(props) {
                 required>
               </input>
             </div>
+            
             <label
               for="terms"
               class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
               I agree with the <a href="#" class="text-blue-600 hover:underline">terms and conditions</a>
+            </label>
+
+            <div class="ml-8 flex items-center h-5">
+              <input
+                id="terms"
+                type="checkbox"
+                value=""
+                class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300"
+                required>
+              </input>
+            </div>
+            
+            <label
+              for="terms"
+              class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+              I am an <a href="#" class="text-blue-600 hover:underline">employer</a>
             </label>
           </div>
           <button
