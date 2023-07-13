@@ -22,15 +22,22 @@ function Nav() {
             <div class="flex flex-col gap-5 mt-5 sm:flex-row sm:items-center sm:justify-end sm:mt-0 sm:pl-5">
               <ul class="flex flex-wrap -mb-px">
                 <li class="mr-2">
-                  <a
-                    href="#"
-                    class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300">Profile</a>
+                  <Link
+                    to="/profile"
+                    class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300">Profile
+                  </Link>
                 </li>
                 <li class="mr-2">
-                  <a href="#" class="inline-block p-4 text-blue-600 border-b-2 border-blue-600 rounded-t-lg" aria-current="page">Dashboard</a>
+                  <Link
+                    to="/"
+                    class="inline-block p-4 text-blue-600 border-b-2 border-blue-600 rounded-t-lg">Dashboard
+                  </Link>
                 </li>
                 <li class="mr-2">
-                  <a href="#" class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300">Projects</a>
+                  <Link
+                    to="/projects"
+                    class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300">Projects
+                  </Link>
                 </li>
 
                 {/* depending on whether the user is logged in or not, render 'login' or 'logout' in the nav bar */}

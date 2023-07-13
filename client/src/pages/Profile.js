@@ -7,7 +7,7 @@ import SearchBar from '../components/SearchBar'; // unsure if we need this
 function Profile() {
   return (
     <>
-
+      <p>Profile</p>
     </>
   )
 }

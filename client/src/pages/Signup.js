@@ -9,7 +9,7 @@ import Nav from '../components/Nav';
 function Signup(props) {
   return (
     <>
-
+      <p>Signup</p>
     </>
   )
 }

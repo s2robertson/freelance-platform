@@ -6,7 +6,7 @@ import ProjectList from '../components/ProjectList';
 function Projects() {
   return (
     <>
-
+      <p>Projects</p>
     </>
   )
 }

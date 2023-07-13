@@ -6,12 +6,18 @@ import {
   concat
 } from '@apollo/client';
 import { authMiddleware } from './utils/auth';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import logo from './logo.svg';
 import './App.css';
 import './index.css';
 
 import Nav from './components/Nav';
+import Dashboard from './pages/Dashboard';
+import Login from './pages/Login';
+import Signup from './pages/Signup';
+import Projects from './pages/Projects';
+import Profile from './pages/Profile';
 
 const httpLink = new HttpLink({ uri: '/graphql' });
 const client = new ApolloClient({
@@ -23,7 +29,33 @@ const client = new ApolloClient({
 function App() {
   return (
     <ApolloProvider client={client}>
-      <Nav />
+      <Router>
+        <div>
+          <Nav />
+          <Routes>
+            <Route
+              path='/'
+              element={<Dashboard />}
+            />
+            <Route
+              path='/login'
+              element={<Login />}
+            />
+            <Route
+              path='/signup'
+              element={<Signup />}
+            />
+            <Route
+              path='/projects'
+              element={<Projects />}
+            />
+            <Route
+              path='/profile'
+              element={<Profile />}
+            />
+          </Routes>
+        </div>
+      </Router>
     </ApolloProvider>
   );
 }
