@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import ProfileForm from './ProfileForm';
 
-import Header from '../../components/Header';
+// import Header from '../../components/';
 import Nav from '../../components/Nav';
 import ProjectList from '../../components/ProjectList';
 import SearchBar from '../../components/SearchBar'; // unsure if we need this
@@ -20,7 +20,6 @@ function Profile() {
   const [editing, setEditing] = useState(true);
   return (
     <>
-      {`editing? ${editing}`}
       {editing ? (
         <ProfileForm user={user} />
       ) : null}
