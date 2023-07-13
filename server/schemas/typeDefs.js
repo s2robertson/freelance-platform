@@ -2,19 +2,19 @@ const { gql } = require("apollo-server-express");
 
 const typeDefs = gql`
   type User {
-    _id: ID!
-    name: String!
-    email: String!
-    password: String!
-    isEmployer: Boolean!
+    _id: ID
+    name: String
+    email: String
+    password: String
+    isEmployer: Boolean
     skills: [Service]
   }
 
   type Project {
-    _id: ID!
-    name: String!
-    description: String!
-    owner: User!
+    _id: ID
+    name: String
+    description: String
+    owner: User
     freelancers: [User]
     dueDate: String
     budget: Int
@@ -22,16 +22,16 @@ const typeDefs = gql`
   }
 
   type Service {
-    _id: ID!
+    _id: ID
     name: String!
   }
 
   type Message {
-    _id: ID!
-    text: String!
-    sender: User!
+    _id: ID
+    text: String
+    sender: User
     receiver: [User]!
-    dateSent: String!
+    dateSent: String
   }
 
   type Auth {
@@ -49,8 +49,8 @@ const typeDefs = gql`
   }
 
   type Mutation {
-    addUser(name: String!, email: String!, password: String!, isEmployer: Boolean!, skills: [Service]): Auth
-    updateUser(userId: ID!, name: String, email: String, password: String, isEmployer: Boolean!, skills: [Service]): User
+    addUser(name: String!, email: String!, password: String!): Auth
+    updateUser(userId: ID!, name: String, email: String, password: String): User
 
     addProject(name: String!, description: String!, ownerId: ID!): Project
     updateProject(projectId: ID!, name: String, description: String): Project
