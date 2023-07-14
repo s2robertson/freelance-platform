@@ -1,8 +1,6 @@
 const jwt = require('jsonwebtoken');
 require('./dotenv');
 
-console.log(process.env.JWT_SECRET);
-
 const SECRET = process.env.JWT_SECRET;
 if (!SECRET) {
   throw new Error('JWT secret missing!');
@@ -35,6 +33,6 @@ module.exports = {
   signToken: function ({ firstName, email, _id }) {
     const payload = { firstName, email, _id };
 
-    return jwt.sign({ data: payload }, secret, { expiresIn: expiration });
+    return jwt.sign({ data: payload }, SECRET, { expiresIn: expiration });
   },
 };
