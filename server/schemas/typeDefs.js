@@ -2,19 +2,27 @@ const { gql } = require("apollo-server-express");
 
 const typeDefs = gql`
   type User {
-    _id: ID
-    name: String
-    email: String
-    password: String
-    isEmployer: Boolean
+    _id: ID!
+    username: String!
+    email: String!
+    password: String!
+    isEmployer: Boolean!
     skills: [Service]
   }
 
+  input UserInput {
+    _id: ID!
+    username: String!
+    email: String!
+    password: String!
+    isEmployer: Boolean!
+    skills: [ServiceInput]
+  }
+
   type Project {
-    _id: ID
-    name: String
-    description: String
-    owner: User
+    _id: ID!
+    name: String!
+    description: String!
     freelancers: [User]
     dueDate: String
     budget: Int
@@ -22,46 +30,51 @@ const typeDefs = gql`
   }
 
   type Service {
-    _id: ID
+    _id: ID!
+    name: String!
+  }
+
+  input ServiceInput {
+    _id: ID!
     name: String!
   }
 
   type Message {
-    _id: ID
-    text: String
-    sender: User
+    _id: ID!
+    text: String!
+    sender: User!
     receiver: [User]!
-    dateSent: String
+    dateSent: String!
   }
 
   type Auth {
-    token: ID
+    token: ID!
     user: User
   }
 
   type Query {
-    users: User
+    users: [User]
     projects: [Project]
     project(_id: ID!): Project
     services: [Service]
-    service(Id: ID!): Service
-    user(_Id: ID!): [Message]
+    service(_id: ID!): Service
+    user(_id: ID!): User
   }
 
   type Mutation {
-    addUser(name: String!, email: String!, password: String!): Auth
-    updateUser(userId: ID!, name: String, email: String, password: String): User
+    addUser(username: String!, email: String!, password: String!, isEmployer: Boolean!,  skills: [ServiceInput]): Auth
+    updateUser(username: String, email: String, password: String, isEmployer: Boolean, skills: [ServiceInput]): User
 
-    addProject(name: String!, description: String!, ownerId: ID!): Project
-    updateProject(projectId: ID!, name: String, description: String): Project
+    addProject(name: String!, description: String!, freelancers: [UserInput], dueDate: String, budget: Int, services: [ServiceInput]): Project
+    updateProject(name: String!, description: String!, freelancers: [UserInput], dueDate: String, budget: Int, services: [ServiceInput]): Project
 
     addService(name: String!): Service
     updateService(serviceId: ID!, name: String): Service
 
-    sendMessage(text: String!, senderId: ID!, receiverIds: [ID]!): Message
+    sendMessage(text: String!, senderId: UserInput!, receiverIds: [UserInput]!, dateSent: String!): Message
 
-    deleteProject(projectId: ID!): Boolean
-    deleteService(serviceId: ID!): Boolean
+    deleteProject(projectId: ID!): ID
+    deleteService(serviceId: ID!): ID
 
     login(email: String!, password: String!): Auth
   }
