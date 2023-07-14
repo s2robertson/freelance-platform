@@ -5,10 +5,6 @@ const bcrypt = require("bcrypt");
 
 // Defining the user schema using the Schema constructor
 const userSchema = new Schema({
-  _id: {
-    type: Schema.Types.ObjectId,
-    required: true,
-  },
   username: {
     type: String,
     required: true,
