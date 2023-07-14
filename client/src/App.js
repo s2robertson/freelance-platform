@@ -25,6 +25,7 @@ const client = new ApolloClient({
   uri: '/graphql',
   cache: new InMemoryCache(),
   link: concat(authMiddleware, httpLink)
+  //link: httpLink
 });
 
 function App() {
@@ -55,7 +56,7 @@ function App() {
               element={<Project />}
             />
             <Route
-              path='/profile'
+              path='/profile/:userId'
               element={<Profile />}
             />
           </Routes>

@@ -8,7 +8,6 @@ const { signToken } = require("../utils/auth");
 
 const resolvers = {
   Query: {
-
     // Retrieve all projects from the database
     projects: async () => {
       return await Project.find();
@@ -38,7 +37,7 @@ const resolvers = {
     // Retrieve user by ID
     user: async (parent, args) => {
       // Retrieve the logged-in user
-      const user = await User.findById(args._id);
+      const user = await User.findById(args._id).populate('skills');
       return user;
     },
 

@@ -5,7 +5,7 @@ const typeDefs = gql`
     _id: ID!
     username: String!
     email: String!
-    password: String!
+    profileDescription: String
     isEmployer: Boolean!
     skills: [Service]
   }

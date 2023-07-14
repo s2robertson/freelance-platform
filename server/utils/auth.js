@@ -1,8 +1,6 @@
 const jwt = require("jsonwebtoken");
 require("./dotenv");
 
-console.log(process.env.JWT_SECRET);
-
 const SECRET = process.env.JWT_SECRET;
 if (!SECRET) {
   throw new Error("JWT secret missing!");
