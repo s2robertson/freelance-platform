@@ -8,6 +8,10 @@ const { signToken } = require("../utils/auth");
 
 const resolvers = {
   Query: {
+    // Retrieve user by id
+    userById: async (parent, { _id }) => {
+      return await User.findById(_id).populate('skills');
+    },
     // Retrieve all projects from the database
     projects: async () => {
       return await Project.find();
@@ -36,12 +40,12 @@ const resolvers = {
         throw new AuthenticationError("Not logged in");
       }
     },
-    // Retrieve user by ID
-    user: async (parent, args, context) => {
+    // Retrieve messages by ID
+    messages: async (parent, args, context) => {
       if (context.user) {
-        // Retrieve the logged-in user
-        const user = await User.findById(context.user._id);
-        return user;
+        const messages = await Message.find({ $or: [{ sender: context.user._id }, { receiver: context.user._id }]});
+        
+        return messages;
       }
       throw new AuthenticationError("Not logged in");
     },

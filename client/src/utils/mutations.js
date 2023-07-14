@@ -76,7 +76,7 @@ export const ADD_PROJECT = gql`
   }
 `
 
-export const UPDATE_PROJECT = gql``
+// export const UPDATE_PROJECT = gql``
 
 
 // mutation for adding a service
@@ -92,7 +92,7 @@ export const ADD_SERVICE = gql`
 
 // mutation for updating a service
 export const UPDATE_SERVICE = gql`
-  mutation updateService(serviceId: ID!, $name: String!) {
+  mutation updateService($serviceId: ID!, $name: String!) {
     addService(_id: $serviceId, name: $name) {
       service {
         _id
@@ -103,18 +103,18 @@ export const UPDATE_SERVICE = gql`
 
 //TODO: iron out differences between definitions here and in typeDefs
 //TODO: should we use the sender and receiver ID?
-export const SEND_MESSAGE = gql``
+// export const SEND_MESSAGE = gql``
 
 //TODO: return types are defined as booleans -> not sure how to implenent this, or if this is even how we should be doing it
-export const DELETE_PROJECT = gql`
-  mutation deleteProject() {
-  }
-`
+// export const DELETE_PROJECT = gql`
+//   mutation deleteProject() {
+//   }
+// `
 
-export const DELETE_SERVICE = gql`
-  mutation deleteService() {
-  }
-`
+// export const DELETE_SERVICE = gql`
+//   mutation deleteService() {
+//   }
+// `
 
 // mutation for logging a user in
 export const LOGIN = gql`
