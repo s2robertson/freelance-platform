@@ -23,7 +23,7 @@ import SearchBar from '../../components/SearchBar'; // unsure if we need this
 
 function Profile() {
   const { userId } = useParams();
-  console.log(`Searching for userId ${userId}`);
+  // console.log(`Searching for userId ${userId}`);
   const { data, loading, error } = useQuery(QUERY_USER_BY_ID, {
     variables: { _id: userId }
   });
@@ -37,14 +37,14 @@ function Profile() {
   } else if (error) {
     return <div>{JSON.stringify(error)}</div>
   }
-  console.log(data);
+  // console.log(data);
 
   return (
     <>
       {editing ? (
-        <ProfileForm user={data.userById} />
+        <ProfileForm user={data.user} />
       ) : (
-        <ProfileDisplay user={data.userById} startEdit={editCallback} />
+        <ProfileDisplay user={data.user} startEdit={editCallback} />
       )}
     </>
   )

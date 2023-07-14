@@ -37,7 +37,7 @@ const resolvers = {
     // Retrieve user by ID
     user: async (parent, args) => {
       // Retrieve the logged-in user
-      const user = await User.findById(args._id);
+      const user = await User.findById(args._id).populate('skills');
       return user;
     },
 
