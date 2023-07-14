@@ -46,6 +46,14 @@ const resolvers = {
       const user = await User.find();
       return user;
     },
+
+    messages: async (parent, args, context) => {
+      if (context.user) {
+        throw new AuthenticationError('Not logged in');
+      }
+      const messages = await Message.find({ $or: [{ sender: context.user._id }, { receiver: context.user._id }]}).sort({ dateSent: -1 });
+      return messages;
+    }
   },
 
   Mutation: {
@@ -116,10 +124,10 @@ const resolvers = {
     },
 
     // Send a new message
-    sendMessage: async (parent, { text, senderId, receiverIds }, context) => {
+    sendMessage: async (parent, { text, receiverIds }, context) => {
       if (context.user) {
         // Creating a new message with the text, senderId, and receiverIds
-        const message = await Message.create({ text, senderId, receiverIds });
+        const message = await Message.create({ text, senderId: context.user._id, receiverIds });
         return message;
       }
       throw new AuthenticationError("Not logged in");
