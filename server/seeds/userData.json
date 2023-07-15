@@ -1,0 +1,47 @@
+[
+    {
+        "_id": "64b16181b86f9701c4fe5d7d",
+        "username": "john.doe",
+        "email": "john.doe@example.com",
+        "password": "password01",
+        "isEmployer": false,
+        "profileDescription": "John Doe's description",
+        "skills": ["64b15e155489641b37a67a2e", "64b15e155489641b37a67a2f", "64b15e155489641b37a67a33"]
+    },
+    {
+        "_id": "64b16181b86f9701c4fe5d7e",
+        "username": "jane.doe",
+        "email": "jane.doe@example.com",
+        "password": "password02",
+        "isEmployer": false,
+        "profileDescription": "Jane Doe's description",
+        "skills": ["64b15e155489641b37a67a2e", "64b15e155489641b37a67a2f", "64b15e155489641b37a67a30", "64b15e155489641b37a67a31"]
+    },
+    {
+        "_id": "64b16181b86f9701c4fe5d7f",
+        "username": "fred.jones",
+        "email": "fred.jones@example.com",
+        "password": "password03",
+        "isEmployer": false,
+        "profileDescription": "Fred Jones's description",
+        "skills": ["64b15e155489641b37a67a2e", "64b15e155489641b37a67a2f", "64b15e155489641b37a67a30", "64b15e155489641b37a67a32"]
+    },
+    {
+        "_id": "64b16181b86f9701c4fe5d80",
+        "username": "tom.wilson",
+        "email": "tom.wilson@example.com",
+        "password": "password04",
+        "isEmployer": false,
+        "profileDescription": "Tom Wilson's description",
+        "skills": ["64b15e155489641b37a67a2e", "64b15e155489641b37a67a30", "64b15e155489641b37a67a31", "64b15e155489641b37a67a32"]
+    },
+    {
+        "_id": "64b16181b86f9701c4fe5d81",
+        "username": "clinton.jacobson",
+        "email": "clinton.jacobson@example.com",
+        "password": "password05",
+        "isEmployer": false,
+        "profileDescription": "Clinton Jacobson's description",
+        "skills": ["64b15e155489641b37a67a2e", "64b15e155489641b37a67a30", "64b15e155489641b37a67a31", "64b15e155489641b37a67a32"]
+    }
+]

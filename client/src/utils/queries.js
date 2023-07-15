@@ -18,6 +18,22 @@ export const QUERY_USERS = gql`
   }
 `;
 
+export const QUERY_USER_BY_ID = gql`
+  query UserById($_id: ID!) {
+    user(_id: $_id) {
+      _id
+      username
+      email
+      isEmployer
+      profileDescription
+      skills {
+        _id
+        name
+      }
+    }
+  }
+`;
+
 // Query to retrieve all projects
 export const QUERY_ALL_PROJECTS = gql`
   query getProjects {

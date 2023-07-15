@@ -9,7 +9,6 @@ const moment = require('moment');
 
 const resolvers = {
   Query: {
-
     // Retrieve all projects from the database
     projects: async () => {
       return await Project.find();
@@ -50,6 +49,14 @@ const resolvers = {
       const user = await User.find().populate('skills').populate('projects').populate('messages');
       return user;
     },
+
+    messages: async (parent, args, context) => {
+      if (context.user) {
+        throw new AuthenticationError('Not logged in');
+      }
+      const messages = await Message.find({ $or: [{ sender: context.user._id }, { receiver: context.user._id }]}).sort({ dateSent: -1 });
+      return messages;
+    }
   },
 
   Mutation: {
@@ -151,6 +158,7 @@ const resolvers = {
         const message = await Message.create({ text: text, sender: context.user._id, receiver: receiverIds, dateSent: moment().format('L') });
         await User.findByIdAndUpdate(context.user._id, { $push: { messages: message._id } }, { new: true });
         await User.findById(context.user._id).populate('messages');
+
         return message;
       }
       throw new AuthenticationError("Not logged in");

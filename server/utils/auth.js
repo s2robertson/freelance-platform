@@ -1,14 +1,12 @@
-const jwt = require('jsonwebtoken');
-require('./dotenv');
 
-console.log("secret below:");
-console.log(process.env.JWT_SECRET);
+const jwt = require("jsonwebtoken");
+require("./dotenv");
 
 const SECRET = process.env.JWT_SECRET;
 if (!SECRET) {
-  throw new Error('JWT secret missing!');
+  throw new Error("JWT secret missing!");
 }
-const expiration = '2h';
+const expiration = "2h";
 
 module.exports = {
   authMiddleware: function ({ req }) {
@@ -17,7 +15,7 @@ module.exports = {
 
     // ["Bearer", "<tokenvalue>"]
     if (req.headers.authorization) {
-      token = token.split(' ').pop().trim();
+      token = token.split(" ").pop().trim();
     }
 
     if (!token) {
@@ -28,7 +26,7 @@ module.exports = {
       const { data } = jwt.verify(token, SECRET, { maxAge: expiration });
       req.user = data;
     } catch {
-      console.log('Invalid token');
+      console.log("Invalid token");
     }
 
     return req;

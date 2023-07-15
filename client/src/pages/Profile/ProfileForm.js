@@ -30,10 +30,11 @@ function ProfileForm(props) {
             <Formik
                 initialValues={props.user}
                 validationSchema={validationSchema}
-                onSubmit={(values, { setSubmitting }) => {
+                onSubmit={async (values, { setSubmitting }) => {
                     // todo
                     // console.log(JSON.stringify(values));
-                    setTimeout(() => setSubmitting(false), 2000);
+                    await props.onSubmit(values);
+                    setSubmitting(false);
                 }}
             >{({ values, setFieldValue }) => 
                 <Form>

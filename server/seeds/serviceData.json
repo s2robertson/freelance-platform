@@ -1,0 +1,8 @@
+[
+    { "_id": "64b15e155489641b37a67a2e", "name": "JavaScript" },
+    { "_id": "64b15e155489641b37a67a2f", "name": "React" },
+    { "_id": "64b15e155489641b37a67a30", "name": "Node.js" },
+    { "_id": "64b15e155489641b37a67a31", "name": "SQL" },
+    { "_id": "64b15e155489641b37a67a32", "name": "MongoDB" },
+    { "_id": "64b15e155489641b37a67a33", "name": "GraphQL" }
+]

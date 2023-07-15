@@ -1,7 +1,11 @@
-const { Schema, model } = require("mongoose");
+const { Schema, model, Types } = require("mongoose");
 
 // Creating a schema for the Message model using the Schema constructor
 const messageSchema = new Schema({
+  subject: {
+    type: String,
+    required: true
+  },
   text: {
     type: String,
     required: true,

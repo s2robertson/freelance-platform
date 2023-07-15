@@ -5,7 +5,7 @@ const typeDefs = gql`
     _id: ID!
     username: String!
     email: String!
-    password: String!
+    profileDescription: String
     isEmployer: Boolean!
     profileDescription: String
     skills: [Service]
@@ -31,6 +31,7 @@ const typeDefs = gql`
 
   type Message {
     _id: ID!
+    subject: String!
     text: String!
     sender: User
     receiver: [User]
@@ -49,6 +50,7 @@ const typeDefs = gql`
     services: [Service]
     service(_id: ID!): Service
     user(_id: ID!): User
+    messages: [Message]
   }
 
   type Mutation {
@@ -63,6 +65,7 @@ const typeDefs = gql`
 
     sendMessage(text: String!, receiverIds: [ID]!): Message
     deleteMessage(messageId: ID!): ID
+
 
     deleteProject(projectId: ID!): ID
     deleteService(serviceId: ID!): ID
