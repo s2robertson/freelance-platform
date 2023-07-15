@@ -6,7 +6,7 @@ import { QUERY_USER_BY_ID } from "../../utils/queries";
 import { getCurrentUser } from '../../utils/auth';
 
 import ProfileForm from './ProfileForm';
-import ProfileDisplay from './ProfileDisplay';
+import ProfileInfo from '../../components/ProfileInfo';
 
 import Nav from '../../components/Nav';
 import ProjectList from '../../components/ProjectList';
@@ -42,9 +42,9 @@ function Profile() {
   return (
     <>
       {editing ? (
-        <ProfileForm user={data.user} />
+        <ProfileForm user={data.user} onSubmit={(values) => console.log(values)} />
       ) : (
-        <ProfileDisplay user={data.user} startEdit={editCallback} />
+        <ProfileInfo user={data.user} startEdit={editCallback} />
       )}
     </>
   )
