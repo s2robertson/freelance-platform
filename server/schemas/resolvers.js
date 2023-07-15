@@ -48,10 +48,12 @@ const resolvers = {
     },
 
     messages: async (parent, args, context) => {
-      if (context.user) {
+      if (!context.user) {
         throw new AuthenticationError('Not logged in');
       }
-      const messages = await Message.find({ $or: [{ sender: context.user._id }, { receiver: context.user._id }]}).sort({ dateSent: -1 });
+      const messages = await Message.find({ 
+        $or: [{ sender: context.user._id }, { receiver: context.user._id }]
+      }).sort({ dateSent: -1 }).populate('sender').populate('receiver');
       return messages;
     }
   },

@@ -19,6 +19,7 @@ import Signup from './pages/Signup';
 import Projects from './pages/Project/';
 import Profile from './pages/Profile';
 import Project from './pages/Project/';
+import Messages from './pages/Messages/'
 
 const httpLink = new HttpLink({ uri: '/graphql' });
 const client = new ApolloClient({
@@ -58,6 +59,10 @@ function App() {
             <Route
               path='/profile/:userId'
               element={<Profile />}
+            />
+            <Route
+              path='/messages'
+              element={<Messages />}
             />
           </Routes>
         </div>

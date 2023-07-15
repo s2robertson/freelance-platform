@@ -108,8 +108,29 @@ export const QUERY_SERVICE = gql`
   }
 `;
 
+export const QUERY_MESSAGES = gql`
+  query getMessages {
+    messages {
+      _id
+      subject
+      text
+      sender {
+        _id
+        username
+        email
+      }
+      receiver {
+        _id
+        username
+        email
+      }
+      dateSent
+    }
+  }
+`;
+
 // Query to retrieve messages for a specific user
-export const QUERY_USER_MESSAGES = gql`
+/*export const QUERY_USER_MESSAGES = gql`
   query getUserMessages($userId: ID!) {
     user(_Id: $userId) {
       _id
@@ -131,4 +152,4 @@ export const QUERY_USER_MESSAGES = gql`
       }
     }
   }
-`;
+`;*/
