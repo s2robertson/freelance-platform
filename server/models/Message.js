@@ -9,7 +9,6 @@ const messageSchema = new Schema({
   sender: {
     type: Schema.Types.ObjectId,
     ref: "User",
-    required: true,
   },
   receiver: [
     {
@@ -20,7 +19,6 @@ const messageSchema = new Schema({
   ],
   dateSent: {
     type: String,
-    required: true,
   },
 });
 
