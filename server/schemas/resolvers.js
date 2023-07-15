@@ -11,7 +11,7 @@ const resolvers = {
 
     // Retrieve all projects from the database
     projects: async () => {
-      return await Project.find();
+      return await Project.find().populate(['owner', 'servicesNeeded', 'freelancers']);
     },
     // Retrieve all services from the database
     services: async () => {
@@ -20,31 +20,32 @@ const resolvers = {
 
     // Retrieve project by ID
     project: async (parent, { _id }, context) => {
-      // Retrieve the logged-in user
-      const user = await User.findById(context.user._id);
-      if (!user) {
-        throw new AuthenticationError("Not logged in");
+      // Is user logged in?
+      if (context.user) {
+        // Find the project by ID and populate owner, servicesNeeded & freelancers
+        try {
+          const project = await Project.findById(_id).populate(
+            ['owner', 'freelancers', 'servicesNeeded']
+          );
+          return project;
+        } catch (e) {
+          throw new Error("Project not found");
+        }
       }
-      // Find the project by ID and populate owner & freelancers
-      const project = await Project.findById(_id).populate(
-        "owner freelancers"
-      );
-      if (!project) {
-        throw new Error("Project not found");
-      }
-      return project;
+      throw new AuthenticationError("Not logged in");
     },
 
     // Retrieve user by ID
     user: async (parent, args) => {
       // Retrieve the logged-in user
-      const user = await User.findById(args._id);
+      const user = await User.findById(args._id).populate(['skills', 'projects']);
       return user;
     },
 
     users: async (parent) => {
       // Retrieve the logged-in user
-      const user = await User.find();
+      const user = await User.find().populate('skills', 'projects');
+      //await user.populate('projects');
       return user;
     },
   },
@@ -52,39 +53,49 @@ const resolvers = {
   Mutation: {
     // Adding a new user
     addUser: async (parent, args) => {
+      // creates new user with args
       const user = await User.create(args);
-      const token = signToken(user);
+      const token = signToken({ username: user.username, _id: user._id, email: user.email });
+
+      await user.populate('skills');
+      await user.populate('projects');
+      console.log(user);
+
       return { token, user };
     },
 
     // Updating an existing user
     updateUser: async (parent, args, context) => {
       if (context.user) {
-        // Update the user by ID
-        return await User.findByIdAndUpdate(context.user._id, args, {
-          new: true,
-        });
+        const user = await User.findByIdAndUpdate(context.user._id, args, { new: true })
+        await user.populate(['skills', 'projects']);
+
+        console.log(user);
+
+        return user
       }
       throw new AuthenticationError("Not logged in");
     },
 
     // Adding a new project
-    addProject: async (parent, { name, description, ownerId }, context) => {
+    addProject: async (parent, { name, description, freelancers, budget }, context) => {
       if (context.user) {
         // Create a new project with the name, description, and ownerId
-        const project = await Project.create({ name, description, ownerId });
+        const project = await Project.create({ name, description, owner: context.user._id, freelancers, budget });
+        // find the current logged in user, and push the just-created project into the projects array
+        await User.findByIdAndUpdate(context.user._id, { $push: { projects: project._id } }, { new: true });
         return project;
       }
       throw new AuthenticationError("Not logged in");
     },
 
     // Update an existing project
-    updateProject: async (parent, { projectId, name, description }, context) => {
+    updateProject: async (parent, { _id, name, description, freelancers }, context) => {
       if (context.user) {
         // Update the project by ID with name and description
         const updatedProject = await Project.findByIdAndUpdate(
-          projectId,
-          { name, description },
+          _id,
+          { name, description, freelancers },
           { new: true }
         );
         return updatedProject;
@@ -131,7 +142,7 @@ const resolvers = {
       if (context.user) {
         // Find the project and delete the project by ID
         await Project.findByIdAndDelete(projectId);
-        return true;
+        return ("Project deleted:" + projectId);
       }
       throw new AuthenticationError("Not logged in");
     },
@@ -141,7 +152,7 @@ const resolvers = {
       if (context.user) {
         // Find the service and delete the service by ID
         await Service.findByIdAndDelete(serviceId);
-        return true;
+        return ("Service deleted:" + serviceId);
       }
       throw new AuthenticationError("Not logged in");
     },
@@ -159,7 +170,8 @@ const resolvers = {
         throw new AuthenticationError("Incorrect credentials");
       }
       // Generate a token for the authenticated user
-      const token = signToken(user);
+      const token = signToken({ username: user.username, _id: user._id, email: user.email });
+      console.log(user);
       return { token, user };
     },
   },

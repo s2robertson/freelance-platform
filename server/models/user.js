@@ -3,6 +3,9 @@ const { Schema, model } = require("mongoose");
 // Importing the bcrypt module for password hashing
 const bcrypt = require("bcrypt");
 
+const Project = require('./Project')
+const Service = require('./Service');
+
 // Defining the user schema using the Schema constructor
 const userSchema = new Schema({
   username: {
@@ -28,12 +31,18 @@ const userSchema = new Schema({
     type: String,
     default: 'No description yet'
   },
+  // The projects field represents the skills associated with the user
+  projects: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Project",
+    }
+  ],
   // The skills field represents the skills associated with the user
   skills: [
     {
       type: Schema.Types.ObjectId,
       ref: "Service",
-      required: true,
     },
   ],
 });

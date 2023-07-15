@@ -8,6 +8,7 @@ const typeDefs = gql`
     password: String!
     isEmployer: Boolean!
     skills: [Service]
+    projects: [Project]
   }
 
   input UserInput {
@@ -17,16 +18,22 @@ const typeDefs = gql`
     password: String!
     isEmployer: Boolean!
     skills: [ServiceInput]
+    projects: [ProjectInput]
   }
 
   type Project {
     _id: ID!
     name: String!
     description: String!
+    owner: User!
     freelancers: [User]
     dueDate: String
     budget: Int
     servicesNeeded: [Service]
+  }
+
+  input ProjectInput {
+    _id: ID!
   }
 
   type Service {
@@ -36,7 +43,6 @@ const typeDefs = gql`
 
   input ServiceInput {
     _id: ID!
-    name: String!
   }
 
   type Message {
@@ -62,14 +68,14 @@ const typeDefs = gql`
   }
 
   type Mutation {
-    addUser(username: String!, email: String!, password: String!, isEmployer: Boolean!,  skills: [ServiceInput]): Auth
-    updateUser(username: String, email: String, password: String, isEmployer: Boolean, skills: [ServiceInput]): User
+    addUser(username: String!, email: String!, password: String!, isEmployer: Boolean!, skills: [ID], projects: [ID]): Auth
+    updateUser(username: String, email: String, password: String, isEmployer: Boolean, skills: [ID], projects: [ID]): User
 
-    addProject(name: String!, description: String!, freelancers: [UserInput], dueDate: String, budget: Int, services: [ServiceInput]): Project
-    updateProject(name: String!, description: String!, freelancers: [UserInput], dueDate: String, budget: Int, services: [ServiceInput]): Project
+    addProject(name: String!, description: String! freelancers: [ID], dueDate: String, budget: Int, services: [ID]): Project
+    updateProject(_id: ID!, name: String, description: String, freelancers: [ID], dueDate: String, budget: Int, services: [ID]): Project
 
     addService(name: String!): Service
-    updateService(serviceId: ID!, name: String): Service
+    updateService(_id: ID, name: String): Service
 
     sendMessage(text: String!, senderId: UserInput!, receiverIds: [UserInput]!, dateSent: String!): Message
 
