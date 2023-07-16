@@ -23,8 +23,6 @@ const messageSchema = new Schema({
   ],
   dateSent: {
     type: String,
-    required: true,
-    default: Date.now,
   },
 });
 

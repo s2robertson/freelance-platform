@@ -137,7 +137,10 @@ const resolvers = {
           throw new Error("You cannot send a message to yourself!");
 
         // Creating a new message with the text, senderId, and receiverIds
-        const message = await Message.create({ text, senderId, receiverIds });
+        const message = await Message.create({ text: text, sender: context.user._id, receiver: receiverIds, dateSent: moment().format('L') });
+        await User.findByIdAndUpdate(context.user._id, { $push: { messages: message._id } }, { new: true });
+        await User.findById(context.user._id).populate('messages');
+
         return message;
       }
       throw new AuthenticationError("Not logged in");

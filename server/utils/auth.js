@@ -1,8 +1,6 @@
-const jwt = require('jsonwebtoken');
-require('./dotenv');
 
-console.log("secret below:");
-console.log(process.env.JWT_SECRET);
+const jwt = require("jsonwebtoken");
+require("./dotenv");
 
 const SECRET = process.env.JWT_SECRET;
 if (!SECRET) {
