@@ -26,6 +26,7 @@ function MessagesPage() {
                 <MessageView 
                     message={currentMessage}
                     onClose={() => setCurrentMessage(null)}
+                    currentUser={currentUser}
                 />
             );
         } else {
