@@ -64,6 +64,13 @@ function ProfileForm(props) {
                     >
                         Save Changes
                     </button>
+                    <button
+                        type='button'
+                        onClick={props.onFinished}
+                        className='border-2 p-1'
+                    >
+                        Cancel
+                    </button>
                 </Form>
             }
             </Formik>
