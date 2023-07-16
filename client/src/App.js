@@ -16,14 +16,16 @@ import Nav from './components/Nav';
 import Dashboard from './pages/Dashboard';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
-import Projects from './pages/Projects';
+import Projects from './pages/Project/';
 import Profile from './pages/Profile';
+import Project from './pages/Project/';
 
 const httpLink = new HttpLink({ uri: '/graphql' });
 const client = new ApolloClient({
   uri: '/graphql',
   cache: new InMemoryCache(),
   link: concat(authMiddleware, httpLink)
+  //link: httpLink
 });
 
 function App() {
@@ -50,7 +52,11 @@ function App() {
               element={<Projects />}
             />
             <Route
-              path='/profile'
+              path='/project/:projectId'
+              element={<Project />}
+            />
+            <Route
+              path='/profile/:userId'
               element={<Profile />}
             />
           </Routes>

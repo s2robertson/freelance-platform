@@ -9,7 +9,6 @@ const moment = require('moment');
 
 const resolvers = {
   Query: {
-
     // Retrieve all projects from the database
     // remove
     projects: async () => {
@@ -52,6 +51,14 @@ const resolvers = {
       const user = await User.find().populate('skills').populate('projects');
       return user;
     },
+
+    messages: async (parent, args, context) => {
+      if (context.user) {
+        throw new AuthenticationError('Not logged in');
+      }
+      const messages = await Message.find({ $or: [{ sender: context.user._id }, { receiver: context.user._id }]}).sort({ dateSent: -1 });
+      return messages;
+    }
   },
 
   Mutation: {
@@ -130,9 +137,7 @@ const resolvers = {
           throw new Error("You cannot send a message to yourself!");
 
         // Creating a new message with the text, senderId, and receiverIds
-        const message = await Message.create({ text: text, sender: context.user._id, receiver: receiverIds, dateSent: moment().format('L') });
-        await User.findByIdAndUpdate(context.user._id, { $push: { messages: message._id } }, { new: true });
-        await User.findById(context.user._id);
+        const message = await Message.create({ text, senderId, receiverIds });
         return message;
       }
       throw new AuthenticationError("Not logged in");

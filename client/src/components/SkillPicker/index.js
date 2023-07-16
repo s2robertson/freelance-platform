@@ -38,7 +38,7 @@ function SkillPicker({ skills, addSkill, removeSkill }) {
                 {skills.map(skill => (
                     <li key={skill._id}>
                         {skill.name}
-                        <button onClick={() => removeSkill(skillsList[selectedIndex])}>
+                        <button type='button' onClick={() => removeSkill(skill)}>
                             &times;
                         </button>
                     </li>

@@ -34,8 +34,27 @@ export function isTokenExpired(token) {
   }
 }
 
+export function getCurrentUser() {
+  try {
+    const token = getToken();
+    if (!token) {
+      return null;
+    }
+
+    const decoded = decode(token);
+    if (decoded.exp >= Date.now() / 1000) {
+      return null;
+    }
+
+    return decoded.data;
+  } catch (err) {
+    console.error(err);
+    return null;
+  }
+}
+
 export const authMiddleware = new ApolloLink((operation, forward) => {
-  operation.setContext((headers = {}) => {
+  operation.setContext(({ headers = {} }) => {
     let token = getToken();
     if (token && isTokenExpired(token)) {
       clearToken();
