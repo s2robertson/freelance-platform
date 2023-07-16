@@ -12,6 +12,12 @@ const projectSchema = new Schema({
     type: String,
     required: true,
   },
+  //the user who owns the project
+  owner: {
+    type: Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
+  },
   freelancers: [
     {
       type: Schema.Types.ObjectId,

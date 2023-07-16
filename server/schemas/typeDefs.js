@@ -8,21 +8,15 @@ const typeDefs = gql`
     profileDescription: String
     isEmployer: Boolean!
     skills: [Service]
-  }
-
-  input UserInput {
-    _id: ID!
-    username: String!
-    email: String!
-    password: String!
-    isEmployer: Boolean!
-    skills: [ServiceInput]
+    projects: [Project]
+    messages: [Message]
   }
 
   type Project {
     _id: ID!
     name: String!
     description: String!
+    owner: User!
     freelancers: [User]
     dueDate: String
     budget: Int
@@ -34,18 +28,13 @@ const typeDefs = gql`
     name: String!
   }
 
-  input ServiceInput {
-    _id: ID!
-    name: String!
-  }
-
   type Message {
     _id: ID!
     subject: String!
     text: String!
-    sender: User!
-    receiver: [User]!
-    dateSent: String!
+    sender: User
+    receiver: [User]
+    dateSent: String
   }
 
   type Auth {
@@ -54,7 +43,7 @@ const typeDefs = gql`
   }
 
   type Query {
-    users: [User]
+    users: [User]!
     projects: [Project]
     project(_id: ID!): Project
     services: [Service]
@@ -64,16 +53,17 @@ const typeDefs = gql`
   }
 
   type Mutation {
-    addUser(username: String!, email: String!, password: String!, isEmployer: Boolean!,  skills: [ServiceInput]): Auth
-    updateUser(username: String, email: String, password: String, isEmployer: Boolean, skills: [ServiceInput]): User
+    addUser(username: String!, email: String!, password: String!, isEmployer: Boolean!, profileDescription: String, skills: [ID], projects: [ID], messages: [ID]): Auth
+    updateUser(username: String, email: String, password: String, isEmployer: Boolean, profileDescription: String, skills: [ID], projects: [ID], messages: [ID]): User
 
-    addProject(name: String!, description: String!, freelancers: [UserInput], dueDate: String, budget: Int, services: [ServiceInput]): Project
-    updateProject(name: String!, description: String!, freelancers: [UserInput], dueDate: String, budget: Int, services: [ServiceInput]): Project
+    addProject(name: String!, description: String! freelancers: [ID], dueDate: String, budget: Int, services: [ID]): Project
+    updateProject(_id: ID!, name: String, description: String, freelancers: [ID], dueDate: String, budget: Int, services: [ID]): Project
 
     addService(name: String!): Service
-    updateService(serviceId: ID!, name: String): Service
+    updateService(_id: ID, name: String): Service
 
-    sendMessage(subject: String!, text: String!, receiverIds: [ID!]!): Message
+    sendMessage(subject: String!, text: String!, receiverIds: [ID]!): Message
+    deleteMessage(messageId: ID!): ID
 
     deleteProject(projectId: ID!): ID
     deleteService(serviceId: ID!): ID

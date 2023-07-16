@@ -5,6 +5,7 @@ const { User, Project, Service, Message } = require("../models");
 // Import the signToken function from the auth utils module
 const { signToken } = require("../utils/auth");
 // const stripe = require('stripe')('sk_test_4eC39HqLyjWDarjtT1zdp7dc');
+const moment = require('moment');
 
 const resolvers = {
   Query: {
@@ -19,31 +20,33 @@ const resolvers = {
 
     // Retrieve project by ID
     project: async (parent, { _id }, context) => {
-      // Retrieve the logged-in user
-      const user = await User.findById(context.user._id);
-      if (!user) {
-        throw new AuthenticationError("Not logged in");
+      // Is user logged in?
+      if (context.user) {
+        // Find the project by ID and populate owner, servicesNeeded & freelancers
+        try {
+          const project = await Project.findById(_id)
+            // .populate(
+            //   'owner', 'freelancers', 'servicesNeeded'
+            // )
+            ;
+          return project;
+        } catch (e) {
+          throw new Error("Project not found");
+        }
       }
-      // Find the project by ID and populate owner & freelancers
-      const project = await Project.findById(_id).populate(
-        "owner freelancers"
-      );
-      if (!project) {
-        throw new Error("Project not found");
-      }
-      return project;
+      throw new AuthenticationError("Not logged in");
     },
 
     // Retrieve user by ID
     user: async (parent, args) => {
       // Retrieve the logged-in user
-      const user = await User.findById(args._id).populate('skills');
+      const user = await User.findById(args._id).populate('skills').populate('projects');
       return user;
     },
 
     users: async (parent) => {
       // Retrieve the logged-in user
-      const user = await User.find();
+      const user = await User.find().populate('skills').populate('projects').populate('messages');
       return user;
     },
 
@@ -61,41 +64,52 @@ const resolvers = {
   Mutation: {
     // Adding a new user
     addUser: async (parent, args) => {
-      const user = await User.create(args);
-      const token = signToken(user);
+      // creates new user with args and populates both the projects and skills arrays
+      const user = (await ((await User.create(args)).populate('projects'))).populate('skills');
+      const token = signToken({ username: user.username, _id: user._id, email: user.email });
+
+      console.log(user);
+
       return { token, user };
     },
 
     // Updating an existing user
     updateUser: async (parent, args, context) => {
       if (context.user) {
-        // Update the user by ID
-        return await User.findByIdAndUpdate(context.user._id, args, {
-          new: true,
-        });
+        // finds user by ID and assigns new values based on args accepted
+        // something to note, is that previous data will be overwritten so for example, if you want to add a new skill or project, you'll need to add the existing ones first. This is something that I couldn't find a way to work around and will need to be taken into consideration when building the front-end
+        const user = await User.findByIdAndUpdate(context.user._id, args, { new: true })
+        await user.populate('projects').populate('skills').populate('messages');
+
+        return user
       }
       throw new AuthenticationError("Not logged in");
     },
 
     // Adding a new project
-    addProject: async (parent, { name, description, ownerId }, context) => {
+    addProject: async (parent, { name, description, freelancers, budget, dueDate, services }, context) => {
       if (context.user) {
         // Create a new project with the name, description, and ownerId
-        const project = await Project.create({ name, description, ownerId });
+        const project = await Project.create({ name, description, owner: context.user._id, freelancers, budget, dueDate, services });
+        // find the current logged in user, and push the just-created project into the projects array
+        await User.findByIdAndUpdate(context.user._id, { $push: { projects: project._id } }, { new: true });
+        // populate projects
+        await User.findById(context.user._id).populate('projects');
         return project;
       }
       throw new AuthenticationError("Not logged in");
     },
 
     // Update an existing project
-    updateProject: async (parent, { projectId, name, description }, context) => {
+    updateProject: async (parent, { _id, name, description, freelancers, budget, dueDate, services }, context) => {
       if (context.user) {
         // Update the project by ID with name and description
         const updatedProject = await Project.findByIdAndUpdate(
-          projectId,
-          { name, description },
+          _id,
+          { name, description, freelancers, budget, dueDate, services },
           { new: true }
         );
+
         return updatedProject;
       }
       throw new AuthenticationError("Not logged in");
@@ -106,20 +120,24 @@ const resolvers = {
       if (context.user) {
         // Creating a new service with name
         const service = await Service.create({ name });
+        // add service to current user's skills array
+        await User.findByIdAndUpdate(context.user._id, { $push: { skills: service._id } }, { new: true });
+        await User.findById(context.user._id).populate('skills');
         return service;
       }
       throw new AuthenticationError("Not logged in");
     },
 
     // Update an existing service
-    updateService: async (parent, { serviceId, name }, context) => {
+    updateService: async (parent, { _id, name }, context) => {
       if (context.user) {
         // Update the service by ID with the name
         const updatedService = await Service.findByIdAndUpdate(
-          serviceId,
+          _id,
           { name },
           { new: true }
         );
+
         return updatedService;
       }
       throw new AuthenticationError("Not logged in");
@@ -128,8 +146,18 @@ const resolvers = {
     // Send a new message
     sendMessage: async (parent, { subject, text, receiverIds }, context) => {
       if (context.user) {
+
+        for (let i = 0; i < receiverIds.length; i++) {
+          if (receiverIds[i] === context.user._id)
+            receiverIds.splice(i, 1)
+        }
+
+        // prevents you from sending a message to yourself
+        if (!receiverIds.length)
+          throw new Error("You cannot send a message to yourself!");
+
         // Creating a new message with the text, senderId, and receiverIds
-        const message = await Message.create({ subject, text, sender: context.user._id, receiver: receiverIds });
+        const message = await Message.create({ subject, text, sender: context.user._id, receiver: receiverIds, dateSent: moment().format('L') });
         await message.populate(['sender', 'receiver'])
         return message;
       }
@@ -140,8 +168,11 @@ const resolvers = {
     deleteProject: async (parent, { projectId }, context) => {
       if (context.user) {
         // Find the project and delete the project by ID
-        await Project.findByIdAndDelete(projectId);
-        return true;
+        const project = await Project.findByIdAndDelete(projectId);
+
+        await User.findByIdAndUpdate(context.user._id, { $pull: { projects: project._id } }, { new: true });
+
+        return ("Project deleted:" + projectId);
       }
       throw new AuthenticationError("Not logged in");
     },
@@ -150,8 +181,22 @@ const resolvers = {
     deleteService: async (parent, { serviceId }, context) => {
       if (context.user) {
         // Find the service and delete the service by ID
-        await Service.findByIdAndDelete(serviceId);
-        return true;
+        const service = await Service.findByIdAndDelete(serviceId);
+
+        await User.findByIdAndUpdate(context.user._id, { $pull: { skills: service._id } }, { new: true });
+
+        return ("Service deleted:" + serviceId);
+      }
+      throw new AuthenticationError("Not logged in");
+    },
+
+    deleteMessage: async (parent, { messageId }, context) => {
+      if (context.user) {
+        const message = await Message.findByIdAndDelete(messageId);
+
+        await User.findByIdAndUpdate(context.user._id, { $pull: { messages: message._id } }, { new: true })
+
+        return ("Message deleted:" + messageId);
       }
       throw new AuthenticationError("Not logged in");
     },
@@ -169,7 +214,8 @@ const resolvers = {
         throw new AuthenticationError("Incorrect credentials");
       }
       // Generate a token for the authenticated user
-      const token = signToken(user);
+      const token = signToken({ username: user.username, _id: user._id, email: user.email });
+      console.log(user);
       return { token, user };
     },
   },
