@@ -38,10 +38,6 @@ export const UPDATE_USER = gql`
       _id
       name
     }
-    messages {
-      _id
-      text
-    }
   }
 }
 `

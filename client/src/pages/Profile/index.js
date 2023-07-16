@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { useQuery } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import { useParams } from "react-router-dom";
 
 import { QUERY_USER_BY_ID } from "../../utils/queries";
+import { UPDATE_USER } from '../../utils/mutations';
 import { getCurrentUser } from '../../utils/auth';
 
 import ProfileForm from './ProfileForm';
@@ -33,6 +34,16 @@ function Profile() {
     variables: { _id: userId }
   });
 
+  const [updateUser] = useMutation(UPDATE_USER, {
+    update(cache, { data }) {
+      cache.writeQuery({
+        query: QUERY_USER_BY_ID,
+        variables: { _id: userId },
+        data: { user: data.updateUser }
+      });
+    }
+  })
+
   const [editing, setEditing] = useState(false);
   const editCallback = (loggedInAs && data?.user && loggedInAs._id === data.user._id) ? (() => setEditing(true)) : null;
 
@@ -46,7 +57,13 @@ function Profile() {
   return (
     <>
       {editing ? (
-        <ProfileForm user={data.user} onSubmit={(values) => console.log(values)} />
+        <ProfileForm 
+          user={data.user} 
+          onSubmit={(values) => updateUser({
+            variables: values
+          })}
+          onFinished={() => setEditing(false)}
+        />
       ) : (
         <ProfileInfo user={data.user} startEdit={editCallback} />
       )}

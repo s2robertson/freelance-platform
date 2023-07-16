@@ -81,7 +81,7 @@ const resolvers = {
         // finds user by ID and assigns new values based on args accepted
         // something to note, is that previous data will be overwritten so for example, if you want to add a new skill or project, you'll need to add the existing ones first. This is something that I couldn't find a way to work around and will need to be taken into consideration when building the front-end
         const user = await User.findByIdAndUpdate(context.user._id, args, { new: true })
-        await user.populate('projects').populate('skills');
+        await user.populate(['projects', 'skills']);
 
         return user
       }
