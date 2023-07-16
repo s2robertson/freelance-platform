@@ -22,14 +22,18 @@ import SearchBar from '../../components/SearchBar'; // unsure if we need this
 };*/
 
 function Profile() {
-  const { userId } = useParams();
+  let { userId } = useParams();
   // console.log(`Searching for userId ${userId}`);
+  const loggedInAs = getCurrentUser();
+  if (!userId && loggedInAs?._id) {
+    userId = loggedInAs._id;
+  }
+  
   const { data, loading, error } = useQuery(QUERY_USER_BY_ID, {
     variables: { _id: userId }
   });
 
   const [editing, setEditing] = useState(false);
-  const loggedInAs = getCurrentUser();
   const editCallback = (loggedInAs && data?.user && loggedInAs._id === data.user._id) ? (() => setEditing(true)) : null;
 
   if (loading) {
