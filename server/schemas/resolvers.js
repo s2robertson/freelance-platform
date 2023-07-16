@@ -10,6 +10,7 @@ const moment = require('moment');
 const resolvers = {
   Query: {
     // Retrieve all projects from the database
+    // remove
     projects: async () => {
       return await Project.find();
     },
@@ -40,13 +41,14 @@ const resolvers = {
     // Retrieve user by ID
     user: async (parent, args) => {
       // Retrieve the logged-in user
-      const user = await User.findById(args._id).populate('skills').populate('projects').populate('messages');
+      const user = await User.findById(args._id).populate('skills').populate('projects');
       return user;
     },
 
+    // delete
     users: async (parent) => {
       // Retrieve the logged-in user
-      const user = await User.find().populate('skills').populate('projects').populate('messages');
+      const user = await User.find().populate('skills').populate('projects');
       return user;
     },
 
@@ -77,7 +79,7 @@ const resolvers = {
         // finds user by ID and assigns new values based on args accepted
         // something to note, is that previous data will be overwritten so for example, if you want to add a new skill or project, you'll need to add the existing ones first. This is something that I couldn't find a way to work around and will need to be taken into consideration when building the front-end
         const user = await User.findByIdAndUpdate(context.user._id, args, { new: true })
-        await user.populate('projects').populate('skills').populate('messages');
+        await user.populate('projects').populate('skills');
 
         return user
       }
@@ -87,12 +89,16 @@ const resolvers = {
     // Adding a new project
     addProject: async (parent, { name, description, freelancers, budget, dueDate, services }, context) => {
       if (context.user) {
+
         // Create a new project with the name, description, and ownerId
         const project = await Project.create({ name, description, owner: context.user._id, freelancers, budget, dueDate, services });
+
         // find the current logged in user, and push the just-created project into the projects array
         await User.findByIdAndUpdate(context.user._id, { $push: { projects: project._id } }, { new: true });
+
         // populate projects
         await User.findById(context.user._id).populate('projects');
+        console.log(project);
         return project;
       }
       throw new AuthenticationError("Not logged in");
@@ -101,42 +107,18 @@ const resolvers = {
     // Update an existing project
     updateProject: async (parent, { _id, name, description, freelancers, budget, dueDate, services }, context) => {
       if (context.user) {
+
+        // create reference to project we're trying to update
+        const projectRef = await Project.findById(_id);
+
+        // compares the reference projects' owner._id to the signed in user's id -> if they do not match, throw an error
+        if ((projectRef.owner._id).toString() !== context.user._id)
+          throw new Error("You can only edit projects that belong to you!")
+
         // Update the project by ID with name and description
-        const updatedProject = await Project.findByIdAndUpdate(
-          _id,
-          { name, description, freelancers, budget, dueDate, services },
-          { new: true }
-        );
+        const updatedProject = await Project.findByIdAndUpdate(_id, { name, description, freelancers, budget, dueDate, services }, { new: true });
 
         return updatedProject;
-      }
-      throw new AuthenticationError("Not logged in");
-    },
-
-    // Add a new service
-    addService: async (parent, { name }, context) => {
-      if (context.user) {
-        // Creating a new service with name
-        const service = await Service.create({ name });
-        // add service to current user's skills array
-        await User.findByIdAndUpdate(context.user._id, { $push: { skills: service._id } }, { new: true });
-        await User.findById(context.user._id).populate('skills');
-        return service;
-      }
-      throw new AuthenticationError("Not logged in");
-    },
-
-    // Update an existing service
-    updateService: async (parent, { _id, name }, context) => {
-      if (context.user) {
-        // Update the service by ID with the name
-        const updatedService = await Service.findByIdAndUpdate(
-          _id,
-          { name },
-          { new: true }
-        );
-
-        return updatedService;
       }
       throw new AuthenticationError("Not logged in");
     },
@@ -167,28 +149,68 @@ const resolvers = {
     // Delete a project
     deleteProject: async (parent, { projectId }, context) => {
       if (context.user) {
-        // Find the project and delete the project by ID
-        const project = await Project.findByIdAndDelete(projectId);
+        // creates a reference to the project we're trying to delete
+        const projectRef = await Project.findById(projectId);
 
+        // compares the rference projects' owner._id to the signed in user's id -> if they do not match, throw an error
+        if ((projectRef.owner._id).toString() !== context.user._id)
+          throw new Error("You can only delete projects that belong to you!")
+
+        // delete project and remove it from the signed in user's projects array
+        const project = await Project.findByIdAndDelete(projectId);
         await User.findByIdAndUpdate(context.user._id, { $pull: { projects: project._id } }, { new: true });
 
-        return ("Project deleted:" + projectId);
+        return ("Project deleted:\n" + projectId);
       }
       throw new AuthenticationError("Not logged in");
     },
 
+    //FIXME: commented out due to unnecessary functionality
     // Delete a service
-    deleteService: async (parent, { serviceId }, context) => {
-      if (context.user) {
-        // Find the service and delete the service by ID
-        const service = await Service.findByIdAndDelete(serviceId);
+    // remove admin
+    // deleteService: async (parent, { serviceId }, context) => {
+    //   if (context.user) {
+    //     // Find the service and delete the service by ID
+    //     const service = await Service.findByIdAndDelete(serviceId);
 
-        await User.findByIdAndUpdate(context.user._id, { $pull: { skills: service._id } }, { new: true });
+    //     await User.findByIdAndUpdate(context.user._id, { $pull: { skills: service._id } }, { new: true });
 
-        return ("Service deleted:" + serviceId);
-      }
-      throw new AuthenticationError("Not logged in");
-    },
+    //     return ("Service deleted:" + serviceId);
+    //   }
+    //   throw new AuthenticationError("Not logged in");
+    // },
+
+    //FIXME: commented out due to unnecessary functionality
+    // Add a new service
+    // remove admin
+    // addService: async (parent, { name }, context) => {
+    //   if (context.user) {
+    //     // Creating a new service with name
+    //     const service = await Service.create({ name });
+    //     // add service to current user's skills array
+    //     await User.findByIdAndUpdate(context.user._id, { $push: { skills: service._id } }, { new: true });
+    //     await User.findById(context.user._id).populate('skills');
+    //     return service;
+    //   }
+    //   throw new AuthenticationError("Not logged in");
+    // },
+
+    //FIXME: commented out due to unnecessary functionality
+    // Update an existing service
+    // remove admin
+    // updateService: async (parent, { _id, name }, context) => {
+    //   if (context.user) {
+    //     // Update the service by ID with the name
+    //     const updatedService = await Service.findByIdAndUpdate(
+    //       _id,
+    //       { name },
+    //       { new: true }
+    //     );
+
+    //     return updatedService;
+    //   }
+    //   throw new AuthenticationError("Not logged in");
+    // },
 
     deleteMessage: async (parent, { messageId }, context) => {
       if (context.user) {
@@ -196,7 +218,7 @@ const resolvers = {
 
         await User.findByIdAndUpdate(context.user._id, { $pull: { messages: message._id } }, { new: true })
 
-        return ("Message deleted:" + messageId);
+        return ("Message deleted:\n" + messageId);
       }
       throw new AuthenticationError("Not logged in");
     },

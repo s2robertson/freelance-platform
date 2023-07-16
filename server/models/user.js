@@ -45,12 +45,6 @@ const userSchema = new Schema({
       ref: "Service",
     },
   ],
-  messages: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "Message"
-    }
-  ],
 });
 
 // Hashing the password before saving

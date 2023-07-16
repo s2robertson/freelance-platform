@@ -10,7 +10,6 @@ const typeDefs = gql`
     profileDescription: String
     skills: [Service]
     projects: [Project]
-    messages: [Message]
   }
 
   type Project {
@@ -54,21 +53,26 @@ const typeDefs = gql`
   }
 
   type Mutation {
-    addUser(username: String!, email: String!, password: String!, isEmployer: Boolean!, profileDescription: String, skills: [ID], projects: [ID], messages: [ID]): Auth
-    updateUser(username: String, email: String, password: String, isEmployer: Boolean, profileDescription: String, skills: [ID], projects: [ID], messages: [ID]): User
+    addUser(username: String!, email: String!, password: String!, isEmployer: Boolean!, profileDescription: String, skills: [ID], projects: [ID]): Auth
+    updateUser(username: String, email: String, password: String, isEmployer: Boolean, profileDescription: String, skills: [ID], projects: [ID]): User
 
     addProject(name: String!, description: String! freelancers: [ID], dueDate: String, budget: Int, services: [ID]): Project
     updateProject(_id: ID!, name: String, description: String, freelancers: [ID], dueDate: String, budget: Int, services: [ID]): Project
 
-    addService(name: String!): Service
-    updateService(_id: ID, name: String): Service
+    ## MUTATIONS COMMENTED OUT -- ADMIN PRIVELAGES UPDATE? REUSABLE...
+
+    #addService(name: String!): Service
+    #updateService(_id: ID, name: String): Service
+    #deleteService(serviceId: ID!): ID
 
     sendMessage(text: String!, receiverIds: [ID]!): Message
     deleteMessage(messageId: ID!): ID
+<<<<<<< HEAD
+=======
 
+>>>>>>> 4efaa7d4f8113b85a12c333dc3b1ba0240c6acc1
 
     deleteProject(projectId: ID!): ID
-    deleteService(serviceId: ID!): ID
 
     login(email: String!, password: String!): Auth
   }
