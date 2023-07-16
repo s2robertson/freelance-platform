@@ -73,7 +73,7 @@ const typeDefs = gql`
     addService(name: String!): Service
     updateService(serviceId: ID!, name: String): Service
 
-    sendMessage(text: String!, receiverIds: [UserInput]!, dateSent: String!): Message
+    sendMessage(subject: String!, text: String!, receiverIds: [ID!]!): Message
 
     deleteProject(projectId: ID!): ID
     deleteService(serviceId: ID!): ID

@@ -126,10 +126,11 @@ const resolvers = {
     },
 
     // Send a new message
-    sendMessage: async (parent, { text, receiverIds }, context) => {
+    sendMessage: async (parent, { subject, text, receiverIds }, context) => {
       if (context.user) {
         // Creating a new message with the text, senderId, and receiverIds
-        const message = await Message.create({ text, senderId: context.user._id, receiverIds });
+        const message = await Message.create({ subject, text, sender: context.user._id, receiver: receiverIds });
+        await message.populate(['sender', 'receiver'])
         return message;
       }
       throw new AuthenticationError("Not logged in");

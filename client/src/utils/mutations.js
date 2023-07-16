@@ -76,17 +76,17 @@ export const DELETE_SERVICE = gql`
 `
 
 export const SEND_MESSAGE = gql`
-  mutation SendMessage($text: String!, $senderId: UserInput!, $dateSent: String!, $receiverIds: [UserInput]!) {
-    sendMessage(text: $text, senderId: $senderId, dateSent: $dateSent, receiverIds: $receiverIds) {
+  mutation SendMessage($subject: String!, $text: String!, $receiverIds: [ID!]!) {
+    sendMessage(subject: $subject, text: $text, receiverIds: $receiverIds) {
       _id
       text
       sender {
         _id
-        name
+        username
       }
       receiver {
         _id
-        name
+        username
       }
       dateSent
     }

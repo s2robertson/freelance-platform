@@ -4,12 +4,12 @@
         "text": "Hello,\nI'm interested in your project (front-end for website).  I have experience in all the technologies you request (JavaScript, React, and GraphQL), and would like the opportunity to show you some of my work.\nJohn Doe",
         "sender": "64b16181b86f9701c4fe5d7d",
         "receiver": ["64b16181b86f9701c4fe5d7e"],
-        "dateSent": "2023-07-14T18:11:19.163Z"
+        "dateSent": 1689358279163
     }, {
         "subject": "Re: Interested in your project",
         "text": "I've looked at your work, and have some questions...",
         "sender": "64b16181b86f9701c4fe5d7e",
         "receiver": ["64b16181b86f9701c4fe5d7d"],
-        "dateSent": "2023-07-15T13:01:52.163Z"
+        "dateSent": 1689426112163
     }
 ]
