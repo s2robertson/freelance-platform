@@ -18,7 +18,7 @@ function MessageList({ messages, currentUser, onOpenMessage }) {
                             Sent by: 
                             {message.sender._id === currentUser._id ? 
                                 `You (Recipients: ${stringifyReceiver(message.receiver)})` :
-                                stringifyReceiver(message.receiver)
+                                message.sender.username
                             }
                         </p>
                         <p>{message.subject}</p>
