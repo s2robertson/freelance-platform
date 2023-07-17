@@ -13,11 +13,23 @@ function MessagesPage() {
     const currentUser = getCurrentUser();
 
     if (loading) {
-        return <p>Loading...</p>
+        return (
+      <div className="block max-w-sm p-8 mt-20 mb-10 ml-16 bg-white border border-gray-200 rounded-lg shadow-xl">
+        Loading...
+      </div>
+    )
     } else if (!currentUser) {
-        return <p>Not logged in</p>
+        return (
+      <div className="block max-w-sm p-8 mt-20 mb-10 ml-16 bg-white border border-gray-200 rounded-lg shadow-xl">
+        Not logged in!
+      </div>
+    )
     } else if (error) {
-        return <p>Error fetching messages</p>
+        return (
+      <div className="block max-w-sm p-8 mt-20 mb-10 ml-16 bg-white border border-gray-200 rounded-lg shadow-xl">
+        Error fetching messages
+      </div>
+    )
     }
 
     if (data.messages && data.messages.length > 0) {
