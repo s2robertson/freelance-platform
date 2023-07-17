@@ -111,7 +111,7 @@ function Nav() {
       }
     `}
         </style>
-        <header className="flex flex-wrap sm:justify-start sm:flex-nowrap w-full bg-sky-950 text-white text-sm py-4 font-extrabold">
+        <header className="flex flex-wrap sm:justify-start sm:flex-nowrap w-full bg-sky-950 text-white text-sm py-4">
           <nav
             className="max-w-[85rem] w-full mx-auto px-4 sm:flex sm:items-center sm:justify-between"
             aria-label="Global"
@@ -133,7 +133,7 @@ function Nav() {
                   <li className="mr-2">
                     <Link
                       to="/profile"
-                      className={`inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 font-extrabold ${
+                      className={`inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 ${
                         location.pathname === "/profile" ? "active" : ""
                       }`}
                     >
@@ -216,4 +216,4 @@ function Nav() {
   return showNav();
 }
 export default Nav;
-// test
+

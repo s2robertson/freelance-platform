@@ -3,8 +3,6 @@ import { useMutation } from "@apollo/client";
 import { Link } from "react-router-dom";
 import { ADD_USER, LOGIN } from "../utils/mutations";
 import { setToken } from "../utils/auth";
-//import {Footer} from '../components/Footer'
-
 import Nav from "../components/Nav";
 
 function Signup(props) {
@@ -187,7 +185,6 @@ function Signup(props) {
           </div>
         </form>
       </div>
-      <Footer />
     </>
   );
 }
