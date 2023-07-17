@@ -1,16 +1,16 @@
-import React, { useState } from 'react';
-import { useMutation } from '@apollo/client';
-import { Link } from 'react-router-dom';
-import { LOGIN } from '../utils/mutations';
-import { setToken } from '../utils/auth';
+import React, { useState } from "react";
+import { useMutation } from "@apollo/client";
+import { Link } from "react-router-dom";
+import { LOGIN } from "../utils/mutations";
+import { setToken } from "../utils/auth";
 
-import Nav from '../components/Nav';
+import Nav from "../components/Nav";
 
 function Login(props) {
   // state variable to be later used for accessing form contents
   const [formState, setFormState] = useState({
-    email: '',
-    password: ''
+    email: "",
+    password: "",
   });
 
   // mutation for logging a given user in
@@ -25,13 +25,13 @@ function Login(props) {
       });
       const token = mutationResponse.data.login.token;
       setToken(token);
-      alert('Welcome back!');
-      window.location = '/';
+      alert("Welcome back!");
+      window.location = "/";
     } catch (e) {
-      alert('Error logging in...');
+      alert("Error logging in...");
       console.log(e);
     }
-  }
+  };
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -43,7 +43,7 @@ function Login(props) {
 
   return (
     <>
-      <div className='p-32 my-20 mx-96 justify-center bg-blue-100 border-blue-200 border-2 rounded-3xl shadow-xl'>
+      <div className="p-32 my-20 mx-96 justify-center bg-sky-950 text-white border-2 rounded-3xl shadow-xl">
         <div>
           <h1 className="text-3xl mb-10">Login</h1>
         </div>
@@ -51,7 +51,8 @@ function Login(props) {
           <div className="mb-6">
             <label
               for="email"
-              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+              className="block mb-2 text-sm font-medium text-white dark:text-white"
+            >
               Your email
             </label>
             <input
@@ -59,39 +60,44 @@ function Login(props) {
               type="email"
               id="email"
               onChange={handleChange}
-              className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="example@email.com"
-              required>
-            </input>
+              className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+              placeholder="example@email.com"
+              required
+            ></input>
           </div>
           <div className="mb-6">
             <label
               for="password"
-              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+              className="block mb-2 text-sm font-medium text-white dark:text-white"
+            >
               Your password
             </label>
             <input
               name="password"
-              placeholder='********'
+              placeholder="********"
               type="password"
               id="password"
               onChange={handleChange}
               className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-              required>
-            </input>
+              required
+            ></input>
           </div>
 
           <button
             type="submit"
-            className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+            className="text-white bg-gray-500 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+          >
             Login
           </button>
-          <div className='mt-6 hover:font-bold'>
-            <Link to='/signup'>Dont have an account? Click here to signup.</Link>
+          <div className="mt-6 hover:font-bold">
+            <Link to="/signup">
+              Dont have an account? Click here to signup.
+            </Link>
           </div>
         </form>
       </div>
     </>
-  )
+  );
 }
 
 export default Login;
