@@ -1,4 +1,6 @@
 import { useQuery } from "@apollo/client";
+import { Link } from "react-router-dom";
+
 import { QUERY_ALL_PROJECTS } from "../../utils/queries";
 
 const ProjectsList = () => {
@@ -21,7 +23,7 @@ const ProjectsList = () => {
       <ul className="border-2 divide-y-2 mt-1">
         {data.projects.map(project => (
           <li key={project._id} className="p-1">
-            <h3>{project.name}</h3>
+            <h3><Link to={`/project/${project._id}`}>{project.name}</Link></h3>
             <p>{project.description}</p>
             <p>Services needed: {project.servicesNeeded.map(service => service.name).join(', ')}</p>
           </li>
