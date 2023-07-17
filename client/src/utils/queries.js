@@ -41,16 +41,6 @@ export const QUERY_ALL_PROJECTS = gql`
       _id
       name
       description
-      owner {
-        _id
-        name
-        email
-      }
-      freelancers {
-        _id
-        name
-        email
-      }
       dueDate
       budget
       servicesNeeded {

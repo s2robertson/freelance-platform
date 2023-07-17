@@ -9,10 +9,16 @@ const moment = require('moment');
 
 const resolvers = {
   Query: {
-    // Retrieve all projects from the database
-    // remove
-    projects: async () => {
-      return await Project.find();
+    // Retrieve all of the current user's projects from the database
+    projects: async (parent, args, context) => {
+      if (context.user) {
+        // console.log('Attempting to find projects');
+        const projects = await Project.find({ owner: context.user._id }).populate('servicesNeeded');
+        // console.log('Found projects: ', projects);
+        return projects;
+      }
+      // console.log('Tried to find projects, but user wasn\'t logged in');
+      throw new AuthenticationError('Not logged in');
     },
     // Retrieve all services from the database
     services: async () => {
@@ -99,17 +105,17 @@ const resolvers = {
     },
 
     // Adding a new project
-    addProject: async (parent, { name, description, freelancers, budget, dueDate, services }, context) => {
+    addProject: async (parent, { name, description, freelancers, budget, dueDate, servicesNeeded }, context) => {
       if (context.user) {
 
         // Create a new project with the name, description, and ownerId
-        const project = await Project.create({ name, description, owner: context.user._id, freelancers, budget, dueDate, services });
+        const project = await Project.create({ name, description, owner: context.user._id, freelancers, budget, dueDate, servicesNeeded });
 
         // find the current logged in user, and push the just-created project into the projects array
         await User.findByIdAndUpdate(context.user._id, { $push: { projects: project._id } }, { new: true });
 
         // populate projects
-        await User.findById(context.user._id).populate('projects');
+        await project.populate('servicesNeeded');
         console.log(project);
         return project;
       }

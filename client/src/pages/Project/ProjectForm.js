@@ -30,10 +30,14 @@ function ProjectForm(props) {
             <Formik
                 initialValues={props.project}
                 validationSchema={validationSchema}
-                onSubmit={(values, { setSubmitting }) => {
-                    // todo
-                    console.log(JSON.stringify(values));
-                    setTimeout(() => setSubmitting(false), 2000)
+                onSubmit={async (values) => {
+                    const submitValues = {
+                        ...values,
+                        servicesNeeded: values.servicesNeeded.map(service => service._id)
+                    }
+                    // console.log('About to submit values: ', submitValues);
+                    await props.onSubmit(submitValues);
+                    props.onFinished();
                 }}
             >
                 {({ values, setFieldValue }) => 
@@ -55,6 +59,19 @@ function ProjectForm(props) {
                                 setFieldValue('servicesNeeded', newSkills);
                             }}
                         />
+                        <button
+                            type="submit"
+                            className="border-2 p-1"
+                        >
+                            Submit
+                        </button>
+                        <button
+                            type="button"
+                            onClick={props.onFinished}
+                            className="border-2 p-1"
+                        >
+                            Cancel
+                        </button>
                     </Form>
                 }
             </Formik>

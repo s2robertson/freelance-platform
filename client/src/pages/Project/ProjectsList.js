@@ -1,54 +1,36 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { QUERY_ALL_PROJECTS } from "../../utils/queries";
 
-const ProjectView = () => {
-  // Getting the projectId
-  const { projectId } = useParams();
-
-  // Creating state to hold the project data
-  const [project, setProject] = useState(null);
-
+const ProjectsList = () => {
   // Using useQuery to fetch the project data
-  const { loading, data } = useQuery(QUERY_ALL_PROJECTS, {
-    variables: { projectId },
-  });
-
-  // Setting the project data once it is fetched
-  useEffect(() => {
-    if (data) {
-      setProject(data.project);
-    }
-  }, [data]);
+  const { loading, data, error } = useQuery(QUERY_ALL_PROJECTS);
 
   if (loading) {
     // Loading message while the data is being fetched
     return <div>Loading...</div>;
-  }
-
-  if (!project) {
+  } else if (error || !data.projects) {
     // If project data is not available, display a message indicating the project was not found
-    return <div>Project not found.</div>;
+    console.log('Error fetching projects: ', error, data?.projects);
+    return <div>Error fetching projects.</div>;
   }
 
   return (
-    // Rendering all the properties
-    <div>
-      <h2>{project.name}</h2>
-      <p>{project.description}</p>
-      <p>Owner: {project.owner.name}</p>
-      <p>Freelancers:</p>
-      {/* <ul>
-        {project.freelancers.map((freelancer) => (
-          <li key={freelancer._id}>{freelancer.name}</li>
+    data.projects.length === 0 ? (
+      <p>You currently have no projects</p>
+    ) : (
+      <ul className="border-2 divide-y-2 mt-1">
+        {data.projects.map(project => (
+          <li key={project._id} className="p-1">
+            <h3>{project.name}</h3>
+            <p>{project.description}</p>
+            <p>Services needed: {project.servicesNeeded.map(service => service.name).join(', ')}</p>
+          </li>
         ))}
-      </ul> */}
-    </div>
-  );
+      </ul>
+  ));
 };
 
-export default ProjectView;
+export default ProjectsList;
 
 // import React from 'react';
 
