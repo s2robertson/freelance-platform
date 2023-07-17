@@ -143,7 +143,7 @@ function Nav() {
                   <li className="mr-2">
                     <Link
                       to="/profile"
-                      className={`inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 ${
+                      className={`inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 font-extrabold ${
                         location.pathname === "/profile" ? "active" : ""
                       }`}
                     >
