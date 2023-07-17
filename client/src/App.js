@@ -16,9 +16,9 @@ import Nav from './components/Nav';
 import Dashboard from './pages/Dashboard';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
-import Projects from './pages/Project/';
+import ProjectsPage from './pages/Project/ProjectsIndex';
 import Profile from './pages/Profile';
-import Project from './pages/Project/';
+import Project from './pages/Project/ProjectIndex';
 import Messages from './pages/Messages/'
 
 const httpLink = new HttpLink({ uri: '/graphql' });
@@ -50,7 +50,7 @@ function App() {
             />
             <Route
               path='/projects'
-              element={<Projects />}
+              element={<ProjectsPage />}
             />
             <Route
               path='/project/:projectId'

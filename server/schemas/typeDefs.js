@@ -20,6 +20,7 @@ const typeDefs = gql`
     dueDate: String
     budget: Int
     servicesNeeded: [Service]
+    seekingFreelancers: Boolean
   }
 
   type Service {
@@ -43,6 +44,7 @@ const typeDefs = gql`
 
   type Query {
     users: [User]!
+    usersBySkill(skills: [ID!]!): [User]
     projects: [Project]
     project(_id: ID!): Project
     projectsByService(services: [ID!]!): [Project]
@@ -56,8 +58,8 @@ const typeDefs = gql`
     addUser(username: String!, email: String!, password: String!, isEmployer: Boolean!, profileDescription: String, skills: [ID], projects: [ID]): Auth
     updateUser(username: String, email: String, password: String, isEmployer: Boolean, profileDescription: String, skills: [ID], projects: [ID]): User
 
-    addProject(name: String!, description: String! freelancers: [ID], dueDate: String, budget: Int, services: [ID]): Project
-    updateProject(_id: ID!, name: String, description: String, freelancers: [ID], dueDate: String, budget: Int, services: [ID]): Project
+    addProject(name: String!, description: String! freelancers: [ID], dueDate: String, budget: Int, servicesNeeded: [ID], seekingFreelancers: Boolean): Project
+    updateProject(_id: ID!, name: String, description: String, freelancers: [ID], dueDate: String, budget: Int, servicesNeeded: [ID], seekingFreelancers: Boolean): Project
 
     ## MUTATIONS COMMENTED OUT -- ADMIN PRIVELAGES UPDATE? REUSABLE...
 

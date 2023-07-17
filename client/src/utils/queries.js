@@ -34,6 +34,19 @@ export const QUERY_USER_BY_ID = gql`
   }
 `;
 
+export const QUERY_USERS_BY_SKILL = gql`
+  query UsersBySkill($skills: [ID!]!) {
+    usersBySkill(skills: $skills) {
+      _id
+      username
+      skills {
+        _id
+        name
+      }
+    }
+  }
+`;
+
 // Query to retrieve all projects
 export const QUERY_ALL_PROJECTS = gql`
   query getProjects {
@@ -41,22 +54,13 @@ export const QUERY_ALL_PROJECTS = gql`
       _id
       name
       description
-      owner {
-        _id
-        name
-        email
-      }
-      freelancers {
-        _id
-        name
-        email
-      }
       dueDate
       budget
       servicesNeeded {
         _id
         name
       }
+      seekingFreelancers
     }
   }
 `;
@@ -70,12 +74,12 @@ export const QUERY_PROJECT = gql`
       description
       owner {
         _id
-        name
+        username
         email
       }
       freelancers {
         _id
-        name
+        username
         email
       }
       dueDate
@@ -84,6 +88,7 @@ export const QUERY_PROJECT = gql`
         _id
         name
       }
+      seekingFreelancers
     }
   }
 `;

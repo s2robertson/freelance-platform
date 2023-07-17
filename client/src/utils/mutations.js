@@ -44,32 +44,25 @@ export const UPDATE_USER = gql`
 `
 
 export const ADD_PROJECT = gql`
- mutation AddProject($name: String!, $description: String!, $freelancers: [ID], $dueDate: String, $budget: Int, $services: [ID]) {
-  addProject(name: $name, description: $description, freelancers: $freelancers, dueDate: $dueDate, budget: $budget, services: $services) {
+ mutation AddProject($name: String!, $description: String!, $freelancers: [ID], $dueDate: String, $budget: Int, $servicesNeeded: [ID], $seekingFreelancers: Boolean) {
+  addProject(name: $name, description: $description, freelancers: $freelancers, dueDate: $dueDate, budget: $budget, servicesNeeded: $servicesNeeded, seekingFreelancers: $seekingFreelancers) {
     _id
     name
     description
-    owner {
-      _id
-      username
-    }
-    freelancers {
-      _id
-      username
-    }
     dueDate
     budget
     servicesNeeded {
       _id
       name
     }
+    seekingFreelancers
   }
 }
 `
 
 export const UPDATE_PROJECT = gql`
-  mutation UpdateProject($id: ID!, $name: String, $description: String, $freelancers: [ID], $dueDate: String, $budget: Int, $services: [ID]) {
-  updateProject(_id: $id, name: $name, description: $description, freelancers: $freelancers, dueDate: $dueDate, budget: $budget, services: $services) {
+  mutation UpdateProject($id: ID!, $name: String, $description: String, $freelancers: [ID], $dueDate: String, $budget: Int, $servicesNeeded: [ID], $seekingFreelancers: Boolean) {
+  updateProject(_id: $id, name: $name, description: $description, freelancers: $freelancers, dueDate: $dueDate, budget: $budget, servicesNeeded: $servicesNeeded, seekingFreelancers: $seekingFreelancers) {
     _id
     name
     description
@@ -87,6 +80,7 @@ export const UPDATE_PROJECT = gql`
       _id
       name
     }
+    seekingFreelancers
   }
 }
 `
