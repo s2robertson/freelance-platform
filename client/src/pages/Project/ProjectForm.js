@@ -1,8 +1,10 @@
+import { useMemo } from 'react';
 import { Formik, Form } from "formik";
 import * as Yup from 'yup';
 
 import FormInput from "../../components/FormElements/FormInput";
 import FormTextArea from "../../components/FormElements/FormTextArea";
+import FormCheckbox from '../../components/FormElements/FormCheckbox';
 import SkillPicker from "../../components/SkillPicker";
 
 const validationSchema = Yup.object({
@@ -21,19 +23,32 @@ const validationSchema = Yup.object({
             .required(),
         name: Yup.string()
             .required()
-    })).ensure()
+    })).ensure(),
+    seekingFreelancers: Yup.bool()
 });
 
 function ProjectForm(props) {
+    const initialValues = useMemo(() => ({
+        name: props.project.name || '',
+        description: props.project.description || '',
+        dueDate: props.project.dueDate || '',
+        budget: props.project.budget || '',
+        servicesNeeded: props.project.servicesNeeded || [],
+        seekingFreelancers: props.project.seekingFreelancers ?? true
+    }), [props.project]);
     return (
         <div>
             <Formik
-                initialValues={props.project}
+                initialValues={initialValues}
                 validationSchema={validationSchema}
-                onSubmit={(values, { setSubmitting }) => {
-                    // todo
-                    console.log(JSON.stringify(values));
-                    setTimeout(() => setSubmitting(false), 2000)
+                onSubmit={async (values) => {
+                    const submitValues = {
+                        ...values,
+                        servicesNeeded: values.servicesNeeded.map(service => service._id)
+                    }
+                    // console.log('About to submit values: ', submitValues);
+                    await props.onSubmit(submitValues);
+                    props.onFinished();
                 }}
             >
                 {({ values, setFieldValue }) => 
@@ -55,6 +70,20 @@ function ProjectForm(props) {
                                 setFieldValue('servicesNeeded', newSkills);
                             }}
                         />
+                        <FormCheckbox id='seekingFreelancers' name='seekingFreelancers'>Seeking freelancers?</FormCheckbox>
+                        <button
+                            type="submit"
+                            className="border-2 p-1"
+                        >
+                            Submit
+                        </button>
+                        <button
+                            type="button"
+                            onClick={props.onFinished}
+                            className="border-2 p-1"
+                        >
+                            Cancel
+                        </button>
                     </Form>
                 }
             </Formik>

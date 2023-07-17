@@ -15,3 +15,49 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+label.block.w-full {
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.error {
+  color: rgb(248, 0, 0);
+  font-style:italic;
+  margin-bottom: 0.6rem;
+  margin-top: 0.1rem;
+}
+
+input.block.w-full {
+  background-color: #f8f8f8;
+  border: 1px solid #ececec;
+  color: #3f3f3f;
+  outline-color: #ececec;
+  transition: 0.5s;
+}
+
+input.block.w-full:focus {
+  background-color: #f8f8f8;
+  border: 1px solid #f8f8f8 !important;
+  outline: 1px solid #f8f8f8;
+  color: #858585;
+}
+
+textarea#profileDescription {
+  background-color: #f8f8f8;
+  border: 1px solid #ececec;
+  color: #3f3f3f;
+  outline-color: #ececec;
+  transition: 0.5s
+}
+
+textarea#profileDescription:focus {
+  background-color: #f8f8f8;
+  border: 1px solid #f8f8f8 !important;
+  outline: 1px solid #f8f8f8;
+  color: #858585;
+}
+
+.card {
+  width: 100%;
+}

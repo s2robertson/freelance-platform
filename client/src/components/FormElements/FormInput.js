@@ -14,10 +14,10 @@ function FormInput(props) {
                 id={props.id} 
                 {...field} 
                 type={props.type || 'text'} 
-                className='block w-full border-solid border-2'
+                className='block w-full border-solid border-2 p-1'
             />
             {meta.touched && meta.error ? (
-                <p>{meta.error}</p>
+                <p className='error'>{meta.error}</p>
             ) : null}
         </div>
     )

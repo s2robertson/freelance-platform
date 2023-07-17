@@ -27,60 +27,63 @@ const validationSchema = Yup.object({
 function ProfileForm(props) {
 
   return (
-    <div>
-      <Formik
-        initialValues={props.user}
-        validationSchema={validationSchema}
-        onSubmit={async (values, { setSubmitting }) => {
-          try {
-            // new object with skills being a map of each element's _id (because we add skills by _id)
-            const newValues = {
-              ...values,
-              skills: values.skills.map(skill => skill._id)
-            }
+    <>
+      <h1 className='text-5xl ml-16 mt-16'>Edit Profile</h1>
+      <div className="block max-w-sm p-8 mt-14 rounded-2xl mb-10 ml-16 bg-white border border-gray-200 rounded-lg shadow-xl card">
+        <Formik
+          initialValues={props.user}
+          validationSchema={validationSchema}
+          onSubmit={async (values, { setSubmitting }) => {
+            try {
+              // new object with skills being a map of each element's _id (because we add skills by _id)
+              const newValues = {
+                ...values,
+                skills: values.skills.map(skill => skill._id)
+              }
 
-            // now we pass newValues on submit
-            await props.onSubmit(newValues);
-            props.onFinished();
-          } catch (err) {
-            console.error(err);
+              // now we pass newValues on submit
+              await props.onSubmit(newValues);
+              props.onFinished();
+            } catch (err) {
+              console.error(err);
+            }
+          }}
+        >{({ values, setFieldValue }) =>
+          <Form className="">
+            <FormInput id='username' name='username' type='text' label='Username: ' />
+            <FormInput id='email' name='email' type='email' label='Email:' />
+            <FormTextArea id='profileDescription' name='profileDescription' label='Enter a description:' />
+            {props.user.isEmployer ? null : (
+              <SkillPicker
+                skills={values.skills}
+                addSkill={(skill) => {
+                  const newSkills = values.skills.concat(skill);
+                  setFieldValue('skills', newSkills);
+                }}
+                removeSkill={(skill) => {
+                  const newSkills = values.skills.filter(s => s._id !== skill._id);
+                  setFieldValue('skills', (newSkills));
+                }}
+              />
+            )}
+            <button
+              type='submit'
+              className='border-2 p-1'
+            >
+              Save Changes
+            </button>
+            <button
+              type='button'
+              onClick={props.onFinished}
+              className='border-2 p-1'
+            >
+              Cancel
+            </button>
+          </Form>
           }
-        }}
-      >{({ values, setFieldValue }) =>
-        <Form>
-          <FormInput id='username' name='username' type='text' label='Username:' />
-          <FormInput id='email' name='email' type='email' label='Email:' />
-          <FormTextArea id='profileDescription' name='profileDescription' label='Enter a description:' />
-          {props.user.isEmployer ? null : (
-            <SkillPicker
-              skills={values.skills}
-              addSkill={(skill) => {
-                const newSkills = values.skills.concat(skill);
-                setFieldValue('skills', newSkills);
-              }}
-              removeSkill={(skill) => {
-                const newSkills = values.skills.filter(s => s._id !== skill._id);
-                setFieldValue('skills', (newSkills));
-              }}
-            />
-          )}
-          <button
-            type='submit'
-            className='border-2 p-1'
-          >
-            Save Changes
-          </button>
-          <button
-            type='button'
-            onClick={props.onFinished}
-            className='border-2 p-1'
-          >
-            Cancel
-          </button>
-        </Form>
-        }
-      </Formik>
-    </div>
+        </Formik>
+      </div>
+    </>
   )
 }
 

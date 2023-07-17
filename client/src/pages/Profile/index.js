@@ -39,11 +39,15 @@ function Profile() {
   const editCallback = (loggedInAs && data?.user && loggedInAs._id === data.user._id) ? (() => setEditing(true)) : null;
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="block max-w-sm p-8 mt-20 mb-10 ml-16 bg-white border border-gray-200 rounded-lg shadow-xl">
+        Loading...
+      </div>
+    )
   } else if (error || !data.user) {
     return (
       <div className="block max-w-sm p-8 mt-20 mb-10 ml-16 bg-white border border-gray-200 rounded-lg shadow-xl">
-        Error fetching user
+        Not logged in!
       </div>
     )
   }

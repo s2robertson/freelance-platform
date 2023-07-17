@@ -9,10 +9,16 @@ const moment = require('moment');
 
 const resolvers = {
   Query: {
-    // Retrieve all projects from the database
-    // remove
-    projects: async () => {
-      return await Project.find();
+    // Retrieve all of the current user's projects from the database
+    projects: async (parent, args, context) => {
+      if (context.user) {
+        // console.log('Attempting to find projects');
+        const projects = await Project.find({ owner: context.user._id }).populate('servicesNeeded');
+        // console.log('Found projects: ', projects);
+        return projects;
+      }
+      // console.log('Tried to find projects, but user wasn\'t logged in');
+      throw new AuthenticationError('Not logged in');
     },
     // Retrieve all services from the database
     services: async () => {
@@ -21,11 +27,12 @@ const resolvers = {
 
     // Retrieve project by ID
     project: async (parent, { _id }, context) => {
+      console.log('Attempting to fetch project: ', _id);
       // Is user logged in?
       if (context.user) {
         // Find the project by ID and populate owner, servicesNeeded & freelancers
         try {
-          const project = await Project.findById(_id)
+          const project = await Project.findById(_id).populate(['owner', 'freelancers', 'servicesNeeded']);
             // .populate(
             //   'owner', 'freelancers', 'servicesNeeded'
             // )
@@ -43,10 +50,7 @@ const resolvers = {
       if (!services) {
         throw new UserInputError('No services requested');
       }
-      if (services.length === 0) {
-        throw new UserInputError("You don't have any skills yet!");
-      }
-      const projects = await Project.find({ servicesNeeded: { $in: services }}).populate('servicesNeeded');
+      const projects = await Project.find({ servicesNeeded: { $in: services }, seekingFreelancers: true }).populate('servicesNeeded');
       // console.log('Returning projects: ', projects);
       return projects;
     },
@@ -63,6 +67,15 @@ const resolvers = {
       // Retrieve the logged-in user
       const user = await User.find().populate('skills').populate('projects');
       return user;
+    },
+
+    // Retrieve users that have certain skills
+    usersBySkill: async (parent, { skills }) => {
+      if (!skills || skills.length === 0) {
+        throw new UserInputError('No skills requested');
+      }
+      const users = await User.find({ skills: { $in: skills }}).populate('skills');
+      return users;
     },
 
     messages: async (parent, args, context) => {
@@ -102,17 +115,17 @@ const resolvers = {
     },
 
     // Adding a new project
-    addProject: async (parent, { name, description, freelancers, budget, dueDate, services }, context) => {
+    addProject: async (parent, { name, description, freelancers, budget, dueDate, servicesNeeded }, context) => {
       if (context.user) {
 
         // Create a new project with the name, description, and ownerId
-        const project = await Project.create({ name, description, owner: context.user._id, freelancers, budget, dueDate, services });
+        const project = await Project.create({ name, description, owner: context.user._id, freelancers, budget, dueDate, servicesNeeded });
 
         // find the current logged in user, and push the just-created project into the projects array
         await User.findByIdAndUpdate(context.user._id, { $push: { projects: project._id } }, { new: true });
 
         // populate projects
-        await User.findById(context.user._id).populate('projects');
+        await project.populate('servicesNeeded');
         console.log(project);
         return project;
       }
@@ -120,18 +133,23 @@ const resolvers = {
     },
 
     // Update an existing project
-    updateProject: async (parent, { _id, name, description, freelancers, budget, dueDate, services }, context) => {
+    updateProject: async (parent, args, context) => {
+      // console.log('Attempting to update project');
+      if (!args?._id) {
+        throw new UserInputError('Invalid project id');
+      }
       if (context.user) {
 
         // create reference to project we're trying to update
-        const projectRef = await Project.findById(_id);
+        const projectRef = await Project.findById(args._id);
 
         // compares the reference projects' owner._id to the signed in user's id -> if they do not match, throw an error
-        if ((projectRef.owner._id).toString() !== context.user._id)
+        if (!projectRef.owner.equals(context.user._id))
           throw new Error("You can only edit projects that belong to you!")
 
         // Update the project by ID with name and description
-        const updatedProject = await Project.findByIdAndUpdate(_id, { name, description, freelancers, budget, dueDate, services }, { new: true });
+        const updatedProject = await Project.findByIdAndUpdate(args._id, args, { new: true });
+        await updatedProject.populate(['owner', 'freelancers', 'servicesNeeded']);
 
         return updatedProject;
       }

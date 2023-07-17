@@ -37,6 +37,10 @@ const projectSchema = new Schema({
       ref: "Service",
     },
   ],
+  seekingFreelancers: {
+    type: Boolean,
+    default: true
+  }
 });
 
 // Creating the Project model

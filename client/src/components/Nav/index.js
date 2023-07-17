@@ -52,8 +52,8 @@ function Nav() {
                       href="#"
                       onClick={() => {
                         clearToken();
-                        console.log(loggedIn());
-                        window.location.reload();
+                        alert('Goodbye!')
+                        window.location.replace('/login');
                       }}
                       className="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300">Logout
                     </a>
