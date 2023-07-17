@@ -3,7 +3,6 @@ import { useMutation } from "@apollo/client";
 import { Link } from "react-router-dom";
 import { ADD_USER, LOGIN } from "../utils/mutations";
 import { setToken } from "../utils/auth";
-//import {Footer} from '../components/Footer'
 
 import Nav from "../components/Nav";
 
@@ -44,8 +43,8 @@ function Signup(props) {
         const token = loginResponse.data.login.token;
         setToken(token);
 
-        alert("Thanks for signing up! Redirecting you to your dashboard...");
-        window.location = "/";
+        alert("Thanks for signing up! Redirecting you to your profile...");
+        window.location = "/profile";
       } catch (e) {
         alert("Error signing up...");
         console.log(e);

@@ -26,7 +26,7 @@ function Login(props) {
       const token = mutationResponse.data.login.token;
       setToken(token);
       alert("Welcome back!");
-      window.location = "/";
+      window.location = "/profile";
     } catch (e) {
       alert("Error logging in...");
       console.log(e);
