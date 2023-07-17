@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { Link } from 'react-router-dom';
 import { LOGIN } from '../utils/mutations';
-import { setToken } from '../utils/auth';
+import { loggedIn, setToken } from '../utils/auth';
 
 import Nav from '../components/Nav';
 
@@ -25,7 +25,10 @@ function Login(props) {
       });
       const token = mutationResponse.data.login.token;
       setToken(token);
+      alert('Welcome back!');
+      window.location = '/';
     } catch (e) {
+      alert('Error logging in...');
       console.log(e);
     }
   }
