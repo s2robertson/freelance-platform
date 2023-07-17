@@ -1,5 +1,5 @@
 // Importing the AuthenticationError class from apollo-server-express package
-const { AuthenticationError } = require("apollo-server-express");
+const { AuthenticationError, UserInputError } = require("apollo-server-express");
 // Importing the User, Project, Service, and Message models
 const { User, Project, Service, Message } = require("../models");
 // Import the signToken function from the auth utils module
@@ -36,6 +36,16 @@ const resolvers = {
         }
       }
       throw new AuthenticationError("Not logged in");
+    },
+
+    // Retrieve projects that are asking for certain skills
+    projectsByService: async (parent, { services }) => {
+      if (!services || services.length === 0) {
+        throw new UserInputError('No services requested');
+      }
+      const projects = await Project.find({ servicesNeeded: { $in: services }}).populate('servicesNeeded');
+      // console.log('Returning projects: ', projects);
+      return projects;
     },
 
     // Retrieve user by ID
