@@ -1,12 +1,18 @@
 import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { Link } from 'react-router-dom';
-// import { SIGNUP } from '../utils/mutations';
-// import Auth from '../utils/auth';
+import { ADD_USER } from '../utils/mutations';
+import Auth from '../utils/auth';
 
 import Nav from '../components/Nav';
 
 function Signup(props) {
+  // state variable to be later used for accessing form contents
+  const [formState, setFormState] = useState({
+    email: '',
+    password: ''
+  });
+
   return (
     <>
       <div className='p-32 my-20 mx-96 bg-blue-100 border-blue-200 border-2 rounded-3xl shadow-xl'>
@@ -16,6 +22,19 @@ function Signup(props) {
         <form>
           <div class="mb-6">
             <label
+              for="username"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+              Your username
+            </label>
+            <input
+              type="text"
+              id="username"
+              class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="username"
+              required>
+            </input>
+          </div>
+          <div class="mb-6">
+            <label
               for="email"
               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
               Your email
@@ -23,7 +42,7 @@ function Signup(props) {
             <input
               type="email"
               id="email"
-              class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="name@flowbite.com"
+              class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="example@mail.com"
               required>
             </input>
           </div>
@@ -36,6 +55,7 @@ function Signup(props) {
             <input
               type="password"
               id="password"
+              placeholder='********'
               className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
               required>
             </input>
@@ -49,6 +69,7 @@ function Signup(props) {
             <input
               type="password"
               id="repeat-password"
+              placeholder='********'
               class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
               required>
             </input>
