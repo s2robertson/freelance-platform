@@ -47,6 +47,7 @@ function ProjectSearch({ user }) {
               {projectsByService.map(project =>
                 <li key={project._id}>
                   <p><Link to={`/project/${project._id}`}>{project.name}</Link></p>
+                  <p>{project.description}</p>
                   <p>{project.servicesNeeded.map(skill => skill.name).join(', ')}</p>
                 </li>
               )}
