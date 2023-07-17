@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { Formik, Form } from "formik";
 import * as Yup from 'yup';
 
@@ -25,10 +26,17 @@ const validationSchema = Yup.object({
 });
 
 function ProjectForm(props) {
+    const initialValues = useMemo(() => ({
+        name: props.project.name || '',
+        description: props.project.description || '',
+        dueDate: props.project.dueDate || '',
+        budget: props.project.budget || '',
+        servicesNeeded: props.project.servicesNeeded || []
+    }), [props.project]);
     return (
         <div>
             <Formik
-                initialValues={props.project}
+                initialValues={initialValues}
                 validationSchema={validationSchema}
                 onSubmit={async (values) => {
                     const submitValues = {

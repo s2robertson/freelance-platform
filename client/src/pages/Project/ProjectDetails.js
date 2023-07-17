@@ -1,7 +1,17 @@
-function ProjectDetails({ project }) {
+function ProjectDetails({ project, editCallback }) {
+  const editButton = editCallback ? (
+    <button
+      type="button"
+      onClick={editCallback}
+      className="border-2 p-1"
+    >
+      Edit
+    </button>
+  ) : null;
   return (
     <div>
       <h2>Project Details</h2>
+      {editButton}
       <p>Name: {project.name}</p>
       <p>Description: {project.description}</p>
       <p>Owner: {project.owner.username}</p>

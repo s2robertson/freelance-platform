@@ -124,18 +124,22 @@ const resolvers = {
     },
 
     // Update an existing project
-    updateProject: async (parent, { _id, name, description, freelancers, budget, dueDate, servicesNeeded }, context) => {
+    updateProject: async (parent, args, context) => {
+      // console.log('Attempting to update project');
+      if (!args?._id) {
+        throw new UserInputError('Invalid project id');
+      }
       if (context.user) {
 
         // create reference to project we're trying to update
-        const projectRef = await Project.findById(_id);
+        const projectRef = await Project.findById(args._id);
 
         // compares the reference projects' owner._id to the signed in user's id -> if they do not match, throw an error
-        if ((projectRef.owner._id).toString() !== context.user._id)
+        if (!projectRef.owner.equals(context.user._id))
           throw new Error("You can only edit projects that belong to you!")
 
         // Update the project by ID with name and description
-        const updatedProject = await Project.findByIdAndUpdate(_id, { name, description, freelancers, budget, dueDate, servicesNeeded }, { new: true });
+        const updatedProject = await Project.findByIdAndUpdate(args._id, args, { new: true });
         await updatedProject.populate(['owner', 'freelancers', 'servicesNeeded']);
 
         return updatedProject;
