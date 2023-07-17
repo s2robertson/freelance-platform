@@ -88,6 +88,19 @@ export const QUERY_PROJECT = gql`
   }
 `;
 
+export const QUERY_PROJECTS_BY_SERVICE = gql`
+  query projectsByService($services: [ID!]!) {
+    projectsByService(services: $services) {
+      _id
+      name
+      servicesNeeded {
+        _id
+        name
+      }
+    }
+  }
+`;
+
 // Query to retrieve all services
 export const QUERY_ALL_SERVICES = gql`
   query getServices {

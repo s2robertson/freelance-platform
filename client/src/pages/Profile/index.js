@@ -8,19 +8,11 @@ import { getCurrentUser } from '../../utils/auth';
 
 import ProfileForm from './ProfileForm';
 import ProfileInfo from '../../components/ProfileInfo';
+import ProjectSearch from './ProjectSearch';
 
 import Nav from '../../components/Nav';
 import ProjectList from '../../components/ProjectList';
 import SearchBar from '../../components/SearchBar'; // unsure if we need this
-
-// replace with useQuery
-/*const user = {
-  _id: 'abc',
-  username: 'john.doe',
-  email: 'john.doe@example.com',
-  description: 'No description yet',
-  skills: []
-};*/
 
 function Profile() {
   let { userId } = useParams();
@@ -29,7 +21,7 @@ function Profile() {
   if (!userId && loggedInAs?._id) {
     userId = loggedInAs._id;
   }
-  
+
   const { data, loading, error } = useQuery(QUERY_USER_BY_ID, {
     variables: { _id: userId }
   });
@@ -53,6 +45,10 @@ function Profile() {
     return <div>Error fetching user</div>
   }
   // console.log(data);
+  let searchComponent = null;
+  if (userId === loggedInAs?._id && !editing) {
+    searchComponent = <ProjectSearch user={data.user} />;
+  }
 
   return (
     <>
@@ -65,7 +61,10 @@ function Profile() {
           onFinished={() => setEditing(false)}
         />
       ) : (
-        <ProfileInfo user={data.user} startEdit={editCallback} />
+        <>
+          <ProfileInfo user={data.user} startEdit={editCallback} />
+          {searchComponent}
+        </>
       )}
     </>
   )

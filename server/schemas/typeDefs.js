@@ -45,7 +45,7 @@ const typeDefs = gql`
     users: [User]!
     projects: [Project]
     project(_id: ID!): Project
-    projectsByService(services: [ID!]): [Project]
+    projectsByService(services: [ID!]!): [Project]
     services: [Service]
     service(_id: ID!): Service
     user(_id: ID!): User
