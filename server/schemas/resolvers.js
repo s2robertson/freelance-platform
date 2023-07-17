@@ -123,7 +123,7 @@ const resolvers = {
     },
 
     // Update an existing project
-    updateProject: async (parent, { _id, name, description, freelancers, budget, dueDate, services }, context) => {
+    updateProject: async (parent, { _id, name, description, freelancers, budget, dueDate, servicesNeeded }, context) => {
       if (context.user) {
 
         // create reference to project we're trying to update
@@ -134,7 +134,8 @@ const resolvers = {
           throw new Error("You can only edit projects that belong to you!")
 
         // Update the project by ID with name and description
-        const updatedProject = await Project.findByIdAndUpdate(_id, { name, description, freelancers, budget, dueDate, services }, { new: true });
+        const updatedProject = await Project.findByIdAndUpdate(_id, { name, description, freelancers, budget, dueDate, servicesNeeded }, { new: true });
+        await updatedProject.populate(['owner', 'freelancers', 'servicesNeeded']);
 
         return updatedProject;
       }
