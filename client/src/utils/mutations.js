@@ -1,5 +1,6 @@
 import { gql } from '@apollo/client';
 
+// we only need to return the token from this mutation, as its the only thing we need to log a user in
 export const LOGIN = gql`
   mutation Login($email: String!, $password: String!) {
   login(email: $email, password: $password) {

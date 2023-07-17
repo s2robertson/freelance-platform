@@ -9,7 +9,7 @@ import Nav from '../components/Nav';
 function Signup(props) {
   return (
     <>
-      <div className='p-32 m-20 bg-gray-300 rounded-3xl shadow-xl'>
+      <div className='p-32 my-20 mx-96 bg-blue-100 border-blue-200 border-2 rounded-3xl shadow-xl'>
         <div>
           <h1 className="text-3xl mb-10">Sign Up</h1>
         </div>
@@ -27,7 +27,7 @@ function Signup(props) {
               required>
             </input>
           </div>
-           <div className="mb-6">
+          <div className="mb-6">
             <label
               for="password"
               className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
@@ -63,7 +63,7 @@ function Signup(props) {
                 required>
               </input>
             </div>
-            
+
             <label
               for="terms"
               class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
@@ -79,7 +79,7 @@ function Signup(props) {
                 required>
               </input>
             </div>
-            
+
             <label
               for="terms"
               class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
@@ -92,7 +92,7 @@ function Signup(props) {
             Register new account
           </button>
           <div className='mt-6 hover:font-bold'>
-            <Link to='/signup'>Already have an account? Click here to login.</Link>
+            <Link to='/login'>Already have an account? Click here to login.</Link>
           </div>
         </form>
       </div>

@@ -48,10 +48,16 @@ function Nav() {
                 {/* depending on whether the user is logged in or not, render 'login' or 'logout' in the nav bar */}
                 {loggedIn() ? (
                   <li className="mr-2">
-                    <Link
-                      to="/logout"
+                    <a
+                      href="#"
+                      onClick={() => {
+                        clearToken();
+                        console.log(loggedIn());
+                        window.location.reload();
+                      }}
                       className="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300">Logout
-                    </Link>
+                    </a>
+
                   </li>
                 ) : (
                   <li className="mr-2">
