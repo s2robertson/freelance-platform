@@ -18,7 +18,7 @@ function Projects() {
   
   if (loading) {
     return <div>Loading...</div>
-  } else if (error) {
+  } else if (error || !data?.project) {
     console.error(error);
     return <div>Error fetching project.</div>
   }
