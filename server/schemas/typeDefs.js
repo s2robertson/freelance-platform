@@ -44,6 +44,7 @@ const typeDefs = gql`
 
   type Query {
     users: [User]!
+    usersBySkill(skills: [ID!]!): [User]
     projects: [Project]
     project(_id: ID!): Project
     projectsByService(services: [ID!]!): [Project]

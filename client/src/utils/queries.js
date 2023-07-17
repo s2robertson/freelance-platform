@@ -34,6 +34,19 @@ export const QUERY_USER_BY_ID = gql`
   }
 `;
 
+export const QUERY_USERS_BY_SKILL = gql`
+  query UsersBySkill($skills: [ID!]!) {
+    usersBySkill(skills: $skills) {
+      _id
+      username
+      skills {
+        _id
+        name
+      }
+    }
+  }
+`;
+
 // Query to retrieve all projects
 export const QUERY_ALL_PROJECTS = gql`
   query getProjects {

@@ -69,6 +69,15 @@ const resolvers = {
       return user;
     },
 
+    // Retrieve users that have certain skills
+    usersBySkill: async (parent, { skills }) => {
+      if (!skills || skills.length === 0) {
+        throw new UserInputError('No skills requested');
+      }
+      const users = await User.find({ skills: { $in: skills }}).populate('skills');
+      return users;
+    },
+
     messages: async (parent, args, context) => {
       if (!context.user) {
         throw new AuthenticationError('Not logged in');

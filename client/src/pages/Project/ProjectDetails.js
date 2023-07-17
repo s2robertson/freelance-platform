@@ -1,12 +1,13 @@
 import { useState } from "react";
 
+import FreelancerSearch from "./FreelancerSearch";
 import MessageForm from "../../components/MessageForm";
-import { loggedIn } from "../../utils/auth";
 
-function ProjectDetails({ project, editCallback }) {
+function ProjectDetails({ project, editCallback, currentUser }) {
   const [showMessageForm, setShowMessageForm] = useState(false);
 
   let editButton = null;
+  let searchComponent = null;
   let messageButton = null;
   if (editCallback) {
     editButton = (
@@ -18,7 +19,8 @@ function ProjectDetails({ project, editCallback }) {
         Edit
       </button>
     );
-  } else if (loggedIn()) {
+    searchComponent = <FreelancerSearch project={project} />
+  } else if (currentUser) {
     messageButton = (
       <button
         type="button"
@@ -43,6 +45,7 @@ function ProjectDetails({ project, editCallback }) {
       <p>Budget: ${project.budget}</p>
       <p>Services Needed: {project.servicesNeeded.map(service => service.name).join(', ')}</p>
       <p>{project.seekingFreelancers ? 'Currently' : 'Not '} seeking freelancers</p>
+      {searchComponent}
       {showMessageForm ? (
         <MessageForm receiver={[project.owner]} onFinished={() => setShowMessageForm(false)} />
       ) : null}

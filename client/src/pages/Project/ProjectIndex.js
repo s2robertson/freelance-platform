@@ -40,7 +40,7 @@ function Projects() {
       onFinished={() => setEditing(false)}
     />
   ) : (
-    <ProjectDetails project={data.project} editCallback={editCallback} />
+    <ProjectDetails project={data.project} editCallback={editCallback} currentUser={currentUser} />
   ) 
 
   // return (
