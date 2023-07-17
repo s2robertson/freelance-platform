@@ -32,7 +32,6 @@ function Projects() {
         const submitValues = { 
           ...values, 
           id: projectId,
-          budget: values.budget || null
         };
         // console.log('About to submit values: ', submitValues);
         updateProject({ variables: submitValues })

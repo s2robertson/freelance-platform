@@ -44,7 +44,8 @@ function ProjectForm(props) {
                 onSubmit={async (values) => {
                     const submitValues = {
                         ...values,
-                        servicesNeeded: values.servicesNeeded.map(service => service._id)
+                        servicesNeeded: values.servicesNeeded.map(service => service._id),
+                        budget: values.budget || null
                     }
                     // console.log('About to submit values: ', submitValues);
                     await props.onSubmit(submitValues);
@@ -64,9 +65,9 @@ function ProjectForm(props) {
                                 setFieldValue('servicesNeeded', newSkills)
                             }}
                             removeSkill={(skill) => {
-                                console.log(`About to remove ${JSON.stringify(skill)}`);
+                                // console.log(`About to remove ${JSON.stringify(skill)}`);
                                 const newSkills = values.servicesNeeded.filter(s => s._id !== skill._id);
-                                console.log(`newSkills = ${JSON.stringify(newSkills)}`);
+                                // console.log(`newSkills = ${JSON.stringify(newSkills)}`);
                                 setFieldValue('servicesNeeded', newSkills);
                             }}
                         />
