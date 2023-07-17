@@ -88,6 +88,19 @@ export const QUERY_PROJECT = gql`
   }
 `;
 
+export const QUERY_PROJECTS_BY_SERVICE = gql`
+  query projectsByService($services: [ID!]!) {
+    projectsByService(services: $services) {
+      _id
+      name
+      servicesNeeded {
+        _id
+        name
+      }
+    }
+  }
+`;
+
 // Query to retrieve all services
 export const QUERY_ALL_SERVICES = gql`
   query getServices {
@@ -108,8 +121,29 @@ export const QUERY_SERVICE = gql`
   }
 `;
 
+export const QUERY_MESSAGES = gql`
+  query getMessages {
+    messages {
+      _id
+      subject
+      text
+      sender {
+        _id
+        username
+        email
+      }
+      receiver {
+        _id
+        username
+        email
+      }
+      dateSent
+    }
+  }
+`;
+
 // Query to retrieve messages for a specific user
-export const QUERY_USER_MESSAGES = gql`
+/*export const QUERY_USER_MESSAGES = gql`
   query getUserMessages($userId: ID!) {
     user(_Id: $userId) {
       _id
@@ -131,4 +165,4 @@ export const QUERY_USER_MESSAGES = gql`
       }
     }
   }
-`;
+`;*/

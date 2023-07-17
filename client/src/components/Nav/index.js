@@ -39,6 +39,12 @@ function Nav() {
                     className="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300">Projects
                   </Link>
                 </li>
+                <li>
+                  <Link
+                    to='/messages'
+                    className="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300">Messages
+                  </Link>
+                </li>
                 {/* depending on whether the user is logged in or not, render 'login' or 'logout' in the nav bar */}
                 {loggedIn() ? (
                   <li className="mr-2">

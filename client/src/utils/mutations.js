@@ -39,10 +39,6 @@ export const UPDATE_USER = gql`
       _id
       name
     }
-    messages {
-      _id
-      text
-    }
   }
 }
 `
@@ -126,8 +122,8 @@ export const DELETE_SERVICE = gql`
 `
 
 export const SEND_MESSAGE = gql`
-  mutation SendMessage($text: String!, $receiverIds: [ID]!) {
-  sendMessage(text: $text, receiverIds: $receiverIds) {
+  mutation SendMessage($subject: String!, $text: String!, $receiverIds: [ID!]!) {
+  sendMessage(subject: $subject, text: $text, receiverIds: $receiverIds) {
     _id
     text
     sender {

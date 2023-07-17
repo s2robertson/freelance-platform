@@ -7,7 +7,6 @@ const typeDefs = gql`
     email: String!
     profileDescription: String
     isEmployer: Boolean!
-    profileDescription: String
     skills: [Service]
     projects: [Project]
   }
@@ -46,6 +45,7 @@ const typeDefs = gql`
     users: [User]!
     projects: [Project]
     project(_id: ID!): Project
+    projectsByService(services: [ID!]!): [Project]
     services: [Service]
     service(_id: ID!): Service
     user(_id: ID!): User
@@ -65,7 +65,7 @@ const typeDefs = gql`
     #updateService(_id: ID, name: String): Service
     #deleteService(serviceId: ID!): ID
 
-    sendMessage(text: String!, receiverIds: [ID]!): Message
+    sendMessage(subject: String!, text: String!, receiverIds: [ID]!): Message
     deleteMessage(messageId: ID!): ID
 
     deleteProject(projectId: ID!): ID

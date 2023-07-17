@@ -1,5 +1,5 @@
 // Importing the AuthenticationError class from apollo-server-express package
-const { AuthenticationError } = require("apollo-server-express");
+const { AuthenticationError, UserInputError } = require("apollo-server-express");
 // Importing the User, Project, Service, and Message models
 const { User, Project, Service, Message } = require("../models");
 // Import the signToken function from the auth utils module
@@ -38,6 +38,16 @@ const resolvers = {
       throw new AuthenticationError("Not logged in");
     },
 
+    // Retrieve projects that are asking for certain skills
+    projectsByService: async (parent, { services }) => {
+      if (!services || services.length === 0) {
+        throw new UserInputError('No services requested');
+      }
+      const projects = await Project.find({ servicesNeeded: { $in: services }}).populate('servicesNeeded');
+      // console.log('Returning projects: ', projects);
+      return projects;
+    },
+
     // Retrieve user by ID
     user: async (parent, args) => {
       // Retrieve the logged-in user
@@ -53,10 +63,12 @@ const resolvers = {
     },
 
     messages: async (parent, args, context) => {
-      if (context.user) {
+      if (!context.user) {
         throw new AuthenticationError('Not logged in');
       }
-      const messages = await Message.find({ $or: [{ sender: context.user._id }, { receiver: context.user._id }]}).sort({ dateSent: -1 });
+      const messages = await Message.find({ 
+        $or: [{ sender: context.user._id }, { receiver: context.user._id }]
+      }).sort({ dateSent: -1 }).populate('sender').populate('receiver');
       return messages;
     }
   },
@@ -79,7 +91,7 @@ const resolvers = {
         // finds user by ID and assigns new values based on args accepted
         // something to note, is that previous data will be overwritten so for example, if you want to add a new skill or project, you'll need to add the existing ones first. This is something that I couldn't find a way to work around and will need to be taken into consideration when building the front-end
         const user = await User.findByIdAndUpdate(context.user._id, args, { new: true })
-        await user.populate('projects').populate('skills');
+        await user.populate(['projects', 'skills']);
 
         return user
       }
@@ -124,7 +136,7 @@ const resolvers = {
     },
 
     // Send a new message
-    sendMessage: async (parent, { text, receiverIds }, context) => {
+    sendMessage: async (parent, { subject, text, receiverIds }, context) => {
       if (context.user) {
 
         for (let i = 0; i < receiverIds.length; i++) {
@@ -137,10 +149,8 @@ const resolvers = {
           throw new Error("You cannot send a message to yourself!");
 
         // Creating a new message with the text, senderId, and receiverIds
-        const message = await Message.create({ text: text, sender: context.user._id, receiver: receiverIds, dateSent: moment().format('L') });
-        await User.findByIdAndUpdate(context.user._id, { $push: { messages: message._id } }, { new: true });
-        await User.findById(context.user._id).populate('messages');
-
+        const message = await Message.create({ subject, text, sender: context.user._id, receiver: receiverIds, dateSent: moment().format('L') });
+        await message.populate(['sender', 'receiver'])
         return message;
       }
       throw new AuthenticationError("Not logged in");
