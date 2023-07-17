@@ -5,6 +5,9 @@ import { QUERY_PROJECTS_BY_SERVICE } from "../../utils/queries";
 
 function ProjectSearch({ user }) {
     const [loadSearch, { data, previousData, error }] = useLazyQuery(QUERY_PROJECTS_BY_SERVICE);
+    if (error) {
+        console.error(error);
+    }
     let projectsByService = data?.projectsByService;
     if (!projectsByService && previousData?.projectsByService) {
         projectsByService = previousData.projectsByService;
@@ -23,7 +26,6 @@ function ProjectSearch({ user }) {
             >
                 Run Search
             </button>
-            {error ? JSON.stringify(error) : null}
             {projectsByService ? (
                 projectsByService.length === 0 ? (
                     <p>No projects found</p>
