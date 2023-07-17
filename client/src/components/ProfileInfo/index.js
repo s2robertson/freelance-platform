@@ -45,7 +45,7 @@ function ProfileInfo({ user, startEdit = null }) {
                 </>
             ) : null}
             {showMessageForm ? (
-                <MessageForm receiver={user} />
+                <MessageForm receiver={[user]} onFinished={() => setShowMessageForm(false)} />
             ) : null}
         </div>
     )

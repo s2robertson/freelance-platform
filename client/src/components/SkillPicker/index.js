@@ -27,6 +27,7 @@ function SkillPicker({ skills, addSkill, removeSkill }) {
                 {skillsList.map((skill, index) => <option value={index} key={skill._id}>{skill.name}</option>)}
             </select>
             <button 
+                type='button'
                 onClick={() => {
                     addSkill(skillsList[selectedIndex]);
                     setSelectedIndex(0);

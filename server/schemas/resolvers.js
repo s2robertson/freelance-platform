@@ -53,10 +53,12 @@ const resolvers = {
     },
 
     messages: async (parent, args, context) => {
-      if (context.user) {
+      if (!context.user) {
         throw new AuthenticationError('Not logged in');
       }
-      const messages = await Message.find({ $or: [{ sender: context.user._id }, { receiver: context.user._id }]}).sort({ dateSent: -1 });
+      const messages = await Message.find({ 
+        $or: [{ sender: context.user._id }, { receiver: context.user._id }]
+      }).sort({ dateSent: -1 }).populate('sender').populate('receiver');
       return messages;
     }
   },
@@ -124,7 +126,7 @@ const resolvers = {
     },
 
     // Send a new message
-    sendMessage: async (parent, { text, receiverIds }, context) => {
+    sendMessage: async (parent, { subject, text, receiverIds }, context) => {
       if (context.user) {
 
         for (let i = 0; i < receiverIds.length; i++) {
@@ -137,10 +139,8 @@ const resolvers = {
           throw new Error("You cannot send a message to yourself!");
 
         // Creating a new message with the text, senderId, and receiverIds
-        const message = await Message.create({ text: text, sender: context.user._id, receiver: receiverIds, dateSent: moment().format('L') });
-        await User.findByIdAndUpdate(context.user._id, { $push: { messages: message._id } }, { new: true });
-        await User.findById(context.user._id).populate('messages');
-
+        const message = await Message.create({ subject, text, sender: context.user._id, receiver: receiverIds, dateSent: moment().format('L') });
+        await message.populate(['sender', 'receiver'])
         return message;
       }
       throw new AuthenticationError("Not logged in");
