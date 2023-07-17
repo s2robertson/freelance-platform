@@ -15,7 +15,7 @@ function FormTextArea(props) {
                 {...field} 
                 type={props.type || 'text'} 
                 rows={props.rows || 10}
-                className="block w-full border-solid border-2"
+                className="block w-full border-solid border-2 p-1"
             ></textarea>
             {meta.touched && meta.error ? (
                 <p>{meta.error}</p>

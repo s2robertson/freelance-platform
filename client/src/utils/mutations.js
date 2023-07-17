@@ -24,13 +24,13 @@ export const ADD_USER = gql`
 `
 
 export const UPDATE_USER = gql`
-  mutation UpdateUser($username: String, $email: String, $password: String, $isEmployer: Boolean, $profileDescription: String) {
-  updateUser(username: $username, email: $email, password: $password, isEmployer: $isEmployer, profileDescription: $profileDescription) {
+  mutation UpdateUser($username: String, $email: String, $password: String, $isEmployer: Boolean, $profileDescription: String, $skills: [ID], $projects: [ID]) {
+  updateUser(username: $username, email: $email, password: $password, isEmployer: $isEmployer, profileDescription: $profileDescription, skills: $skills, projects: $projects) {
     _id
     username
     email
-    isEmployer
     profileDescription
+    isEmployer
     skills {
       _id
       name

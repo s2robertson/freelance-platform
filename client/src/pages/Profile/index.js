@@ -12,7 +12,6 @@ import ProjectSearch from './ProjectSearch';
 
 import Nav from '../../components/Nav';
 import ProjectList from '../../components/ProjectList';
-import SearchBar from '../../components/SearchBar'; // unsure if we need this
 
 function Profile() {
   let { userId } = useParams();
@@ -40,9 +39,17 @@ function Profile() {
   const editCallback = (loggedInAs && data?.user && loggedInAs._id === data.user._id) ? (() => setEditing(true)) : null;
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="block max-w-sm p-8 mt-20 mb-10 ml-16 bg-white border border-gray-200 rounded-lg shadow-xl">
+        Loading...
+      </div>
+    )
   } else if (error || !data.user) {
-    return <div>Error fetching user</div>
+    return (
+      <div className="block max-w-sm p-8 mt-20 mb-10 ml-16 bg-white border border-gray-200 rounded-lg shadow-xl">
+        Not logged in!
+      </div>
+    )
   }
   // console.log(data);
   let searchComponent = null;
@@ -53,8 +60,8 @@ function Profile() {
   return (
     <>
       {editing ? (
-        <ProfileForm 
-          user={data.user} 
+        <ProfileForm
+          user={data.user}
           onSubmit={(values) => updateUser({
             variables: values
           })}

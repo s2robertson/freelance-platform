@@ -2,14 +2,12 @@
 // import React, { useState } from "react";
 // import { loggedIn, getToken, setToken, clearToken, isTokenExpired, authMiddleware } from '../../utils/auth';
 // import { Link } from 'react-router-dom';
-
 // function Nav() {
 //   const [isActive, setActive] = useState({
 //     profile: false,
 //     dashboard: false,
 //     projects: false,
 //   })
-
 //   function showNav() {
 //     return (
 //       <header className="flex flex-wrap sm:justify-start sm:flex-nowrap w-full bg-gray-200 text-sm py-4">
@@ -18,7 +16,6 @@
 //             <a className="flex-none text-2xl font-bold text-gray-700" href="#">Freelance Platform</a>
 //           </div>
 //           <div id="navbar-dark" className="hs-collapse hidden overflow-hidden transition-all duration-300 basis-full grow sm:block">
-
 //             <div className="flex flex-col gap-5 mt-5 sm:flex-row sm:items-center sm:justify-end sm:mt-0 sm:pl-5">
 //               <ul className="flex flex-wrap -mb-px">
 //                 <li className="mr-2">
@@ -75,14 +72,11 @@
 //       </header >
 //     )
 //   }
-
 //   return (
 //     showNav()
 //   )
 // }
-
 // export default Nav;
-
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
@@ -94,23 +88,19 @@ import {
   isTokenExpired,
   authMiddleware,
 } from "../../utils/auth";
-
 function Nav() {
   const location = useLocation();
-
   const [isActive, setActive] = useState({
     profile: false,
     // dashboard: false,
     projects: false,
   });
-
   const handleSetActive = (tab) => {
     setActive({
       ...isActive,
       [tab]: true,
     });
   };
-
   function showNav() {
     return (
       <>
@@ -223,8 +213,7 @@ function Nav() {
       </>
     );
   }
-
   return showNav();
 }
-
 export default Nav;
+
