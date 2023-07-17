@@ -23,7 +23,7 @@ function ProjectSearch({ user }) {
             >
                 Run Search
             </button>
-            {error ? JSON.stringify(error) : null}
+            <p>{error ? JSON.stringify(error.message).replace(/["]+/g, '') : null}</p>
             {projectsByService ? (
                 projectsByService.length === 0 ? (
                     <p>No projects found</p>
