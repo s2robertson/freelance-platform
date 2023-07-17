@@ -67,10 +67,6 @@ const typeDefs = gql`
 
     sendMessage(text: String!, receiverIds: [ID]!): Message
     deleteMessage(messageId: ID!): ID
-<<<<<<< HEAD
-=======
-
->>>>>>> 4efaa7d4f8113b85a12c333dc3b1ba0240c6acc1
 
     deleteProject(projectId: ID!): ID
 
