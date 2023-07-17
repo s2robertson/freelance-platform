@@ -60,12 +60,12 @@ export const QUERY_PROJECT = gql`
       description
       owner {
         _id
-        name
+        username
         email
       }
       freelancers {
         _id
-        name
+        username
         email
       }
       dueDate

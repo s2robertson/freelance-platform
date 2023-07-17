@@ -27,11 +27,12 @@ const resolvers = {
 
     // Retrieve project by ID
     project: async (parent, { _id }, context) => {
+      console.log('Attempting to fetch project: ', _id);
       // Is user logged in?
       if (context.user) {
         // Find the project by ID and populate owner, servicesNeeded & freelancers
         try {
-          const project = await Project.findById(_id)
+          const project = await Project.findById(_id).populate(['owner', 'freelancers', 'servicesNeeded']);
             // .populate(
             //   'owner', 'freelancers', 'servicesNeeded'
             // )

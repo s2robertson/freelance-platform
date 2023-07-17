@@ -46,16 +46,5 @@ export default ProjectsList;
 //     servicesNeeded: ['Service 1', 'Service 2', 'Service 3'],
 //   };
 
-//   return (
-//     <div>
-//       <h2>Project Details</h2>
-//       <p>Name: {project.name}</p>
-//       <p>Description: {project.description}</p>
-//       <p>Owner: {project.owner}</p>
-//       <p>Freelancers: {project.freelancers.join(', ')}</p>
-//       <p>Due Date: {project.dueDate}</p>
-//       <p>Budget: ${project.budget}</p>
-//       <p>Services Needed: {project.servicesNeeded.join(', ')}</p>
-//     </div>
-//   );
+
 // };
