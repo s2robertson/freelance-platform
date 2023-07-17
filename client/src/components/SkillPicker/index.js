@@ -1,20 +1,18 @@
 import { useState, useMemo } from 'react';
+import { useQuery } from '@apollo/client';
 
-// replace this with useQuery
-const allSkills = [
-    { _id: 1, name: 'JavaScript' },
-    { _id: 2, name: 'React' },
-    { _id: 3, name: 'Node.js' },
-    { _id: 4, name: 'SQL' },
-    { _id: 5, name: 'MongoDB' },
-    { _id: 6, name: 'GraphQL' }
-];
+import { QUERY_ALL_SERVICES } from '../../utils/queries';
 
 function SkillPicker({ skills, addSkill, removeSkill }) {
+    const { data } = useQuery(QUERY_ALL_SERVICES);
+
     const skillsList = useMemo(() => {
         // console.log(`Filter allSkills against ${JSON.stringify(skills)}`);
-        return allSkills.filter(skill => !skills.find(s => s._id === skill._id));
-    }, [skills]);
+        if (!data) {
+            return [];
+        }
+        return data.services.filter(skill => !skills.find(s => s._id === skill._id));
+    }, [skills, data]);
 
     const [selectedIndex, setSelectedIndex] = useState(0);
     function onChangeSelected(e) {

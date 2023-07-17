@@ -13,7 +13,7 @@ const validationSchema = Yup.object({
         .trim()
         .email('Invalid email')
         .required('Required'),
-    description: Yup.string()
+    profileDescription: Yup.string()
         .trim()
         .required('Required'),
     skills: Yup.array(Yup.object({
@@ -25,22 +25,25 @@ const validationSchema = Yup.object({
 });
 
 function ProfileForm(props) {
+    
     return (
         <div>
             <Formik
                 initialValues={props.user}
                 validationSchema={validationSchema}
                 onSubmit={async (values, { setSubmitting }) => {
-                    // todo
-                    // console.log(JSON.stringify(values));
-                    await props.onSubmit(values);
-                    setSubmitting(false);
+                    try {
+                        await props.onSubmit(values);
+                        props.onFinished();
+                    } catch (err) {
+                        console.error(err);
+                    }
                 }}
             >{({ values, setFieldValue }) => 
                 <Form>
                     <FormInput id='username' name='username' type='text' label='Username:' />
                     <FormInput id='email' name='email' type='email' label='Email:' />
-                    <FormTextArea id='description' name='description' label='Enter a description:' />
+                    <FormTextArea id='profileDescription' name='profileDescription' label='Enter a description:' />
                     {props.user.isEmployer ? null : (
                         <SkillPicker 
                             skills={values.skills}
@@ -55,6 +58,19 @@ function ProfileForm(props) {
                             }}
                         />
                     )}
+                    <button
+                        type='submit'
+                        className='border-2 p-1'
+                    >
+                        Save Changes
+                    </button>
+                    <button
+                        type='button'
+                        onClick={props.onFinished}
+                        className='border-2 p-1'
+                    >
+                        Cancel
+                    </button>
                 </Form>
             }
             </Formik>

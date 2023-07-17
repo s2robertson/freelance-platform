@@ -1,5 +1,5 @@
 // Importing the AuthenticationError class from apollo-server-express package
-const { AuthenticationError } = require("apollo-server-express");
+const { AuthenticationError, UserInputError } = require("apollo-server-express");
 // Importing the User, Project, Service, and Message models
 const { User, Project, Service, Message } = require("../models");
 // Import the signToken function from the auth utils module
@@ -36,6 +36,16 @@ const resolvers = {
         }
       }
       throw new AuthenticationError("Not logged in");
+    },
+
+    // Retrieve projects that are asking for certain skills
+    projectsByService: async (parent, { services }) => {
+      if (!services || services.length === 0) {
+        throw new UserInputError('No services requested');
+      }
+      const projects = await Project.find({ servicesNeeded: { $in: services }}).populate('servicesNeeded');
+      // console.log('Returning projects: ', projects);
+      return projects;
     },
 
     // Retrieve user by ID
@@ -81,7 +91,7 @@ const resolvers = {
         // finds user by ID and assigns new values based on args accepted
         // something to note, is that previous data will be overwritten so for example, if you want to add a new skill or project, you'll need to add the existing ones first. This is something that I couldn't find a way to work around and will need to be taken into consideration when building the front-end
         const user = await User.findByIdAndUpdate(context.user._id, args, { new: true })
-        await user.populate('projects').populate('skills');
+        await user.populate(['projects', 'skills']);
 
         return user
       }
