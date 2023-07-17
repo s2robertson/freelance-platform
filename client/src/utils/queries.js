@@ -47,6 +47,7 @@ export const QUERY_ALL_PROJECTS = gql`
         _id
         name
       }
+      seekingFreelancers
     }
   }
 `;
@@ -74,6 +75,7 @@ export const QUERY_PROJECT = gql`
         _id
         name
       }
+      seekingFreelancers
     }
   }
 `;

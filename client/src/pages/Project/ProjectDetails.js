@@ -42,6 +42,7 @@ function ProjectDetails({ project, editCallback }) {
       <p>Due Date: {project.dueDate}</p>
       <p>Budget: ${project.budget}</p>
       <p>Services Needed: {project.servicesNeeded.map(service => service.name).join(', ')}</p>
+      <p>{project.seekingFreelancers ? 'Currently' : 'Not '} seeking freelancers</p>
       {showMessageForm ? (
         <MessageForm receiver={[project.owner]} onFinished={() => setShowMessageForm(false)} />
       ) : null}

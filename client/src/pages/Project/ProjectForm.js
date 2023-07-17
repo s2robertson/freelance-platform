@@ -4,6 +4,7 @@ import * as Yup from 'yup';
 
 import FormInput from "../../components/FormElements/FormInput";
 import FormTextArea from "../../components/FormElements/FormTextArea";
+import FormCheckbox from '../../components/FormElements/FormCheckbox';
 import SkillPicker from "../../components/SkillPicker";
 
 const validationSchema = Yup.object({
@@ -22,7 +23,8 @@ const validationSchema = Yup.object({
             .required(),
         name: Yup.string()
             .required()
-    })).ensure()
+    })).ensure(),
+    seekingFreelancers: Yup.bool()
 });
 
 function ProjectForm(props) {
@@ -31,7 +33,8 @@ function ProjectForm(props) {
         description: props.project.description || '',
         dueDate: props.project.dueDate || '',
         budget: props.project.budget || '',
-        servicesNeeded: props.project.servicesNeeded || []
+        servicesNeeded: props.project.servicesNeeded || [],
+        seekingFreelancers: props.project.seekingFreelancers ?? true
     }), [props.project]);
     return (
         <div>
@@ -67,6 +70,7 @@ function ProjectForm(props) {
                                 setFieldValue('servicesNeeded', newSkills);
                             }}
                         />
+                        <FormCheckbox id='seekingFreelancers' name='seekingFreelancers'>Seeking freelancers?</FormCheckbox>
                         <button
                             type="submit"
                             className="border-2 p-1"

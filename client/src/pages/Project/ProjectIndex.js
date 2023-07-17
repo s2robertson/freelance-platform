@@ -34,7 +34,7 @@ function Projects() {
           id: projectId,
           budget: values.budget || null
         };
-        console.log('About to submit values: ', submitValues);
+        // console.log('About to submit values: ', submitValues);
         updateProject({ variables: submitValues })
       } }
       onFinished={() => setEditing(false)}

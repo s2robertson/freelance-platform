@@ -50,7 +50,7 @@ const resolvers = {
       if (!services || services.length === 0) {
         throw new UserInputError('No services requested');
       }
-      const projects = await Project.find({ servicesNeeded: { $in: services }}).populate('servicesNeeded');
+      const projects = await Project.find({ servicesNeeded: { $in: services }, seekingFreelancers: true }).populate('servicesNeeded');
       // console.log('Returning projects: ', projects);
       return projects;
     },
