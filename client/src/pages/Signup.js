@@ -42,8 +42,8 @@ function Signup(props) {
         const token = loginResponse.data.login.token;
         setToken(token);
 
-        alert("Thanks for signing up! Redirecting you to your dashboard...");
-        window.location = "/";
+        alert("Thanks for signing up! Redirecting you to your profile...");
+        window.location = "/profile";
       } catch (e) {
         alert("Error signing up...");
         console.log(e);
