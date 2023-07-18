@@ -48,16 +48,22 @@ const userSchema = new Schema({
 });
 
 // Hashing the password before saving
-userSchema.pre("save", async function (next) {
-  // Checking if the password field is new or modified
-  if (this.isNew || this.isModified("password")) {
-    const saltRounds = 10;
-    // Hashing the password using bcrypt
-    this.password = await bcrypt.hash(this.password, saltRounds);
-  }
+async function hashPassword(obj) {
+  const saltRounds = 10;
+  // Hashing the password using bcrypt
+  obj.password = await bcrypt.hash(obj.password, saltRounds);
+}
 
+userSchema.pre("save", function(next) {
+  // Checking if the password field is new or modified
+  if (this.isNew || this.isModified('password')) {
+    return hashPassword(this);
+  }
   next();
 });
+userSchema.pre('insertMany', function(next, docs) {
+  return Promise.all(docs.map(doc => hashPassword(doc)));
+})
 
 // custom method to compare and validate password for logging in
 userSchema.methods.isCorrectPassword = async function (password) {
