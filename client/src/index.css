@@ -24,7 +24,7 @@ label.block.w-full {
 input.block.w-full {
   background-color: #fff;
   border: 1px solid #ececec;
-  color: #3f3f3f;
+  color: #000;
   outline-color: #ececec;
   transition: 0.5s;
 }
@@ -33,13 +33,13 @@ input.block.w-full:focus {
   background-color: #fff;
   border: 1px solid #f8f8f8 !important;
   outline: 1px solid #f8f8f8;
-  color: #a3a3a3;
+  color: #000;
 }
 
 textarea {
   background-color: #fff;
   border: 1px solid #ececec;
-  color: #3f3f3f;
+  color: #000;
   outline-color: #ececec;
   transition: 0.5s
 }
@@ -48,7 +48,7 @@ textarea:focus {
   background-color: #fff;
   border: 1px solid #f8f8f8 !important;
   outline: 1px solid #f8f8f8;
-  color: #a3a3a3;
+  color: #000;
 }
 
 .message:hover {
