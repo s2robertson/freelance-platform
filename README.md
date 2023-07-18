@@ -1,3 +1,4 @@
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 # freelance-platform
 
 <!-- ![MIT License](https:Image link) -->
@@ -31,19 +32,23 @@ Watch it on ![Google Drive](video Link)
 
 Application Preview:
 
-![gif image of the application working.](./public/assets/images/)
-
 ### Profile Page
 
-![gif image of the application working.](./public/assets/images/)
+![profile](./assets/profile.png)
 
 ### Project Page
 
-![gif image of the application working.](./public/assets/images/)
+![new project](./assets/newproj.png)
 
-### Login & SignUp Page
+![project details](./assets/projdet.png)
 
-![gif image of the application working.](./public/assets/images/)
+### Messages Page
+
+![messages](./assets/messages.png)
+
+### SignUp Page
+
+![signup](./assets/signup.png)
 
 <br>
 
@@ -57,11 +62,30 @@ Application Preview:
 
 The application utilizes a range of technogies to delivere its functionality. These include:
 
-- Back-End Technologies
-  - Node.js, Express, MongoDB, Mongoose(ODM), GraphQL, Apollo Server, JSON Web Tokens (JWT), bcrypt
-    <br>
-- Front-End Technologies
-  - React, React Router, Tailwind CSS, Apollo Client, Formik, React Hook Form
+- Back-End Technologies:
+
+  - Node.js: JavaScript runtime
+  - Express: web application framework for Node.js
+
+- Front-End Technologies:
+
+  - React
+  - TailwindCSS: enhance the visual appearance and layout of the application
+
+- Database:
+
+  - MongoDB: handle and store data
+
+<br>
+
+## Additional Features to Consider
+
+Here are some additional features to consider or implement in the future. These include:
+
+1. Implement Advanced Search and Filtering
+2. Integrate Real-time Communication
+3. Offer Project Management Tools
+4. Implement payment integration
 
 <br>
 
@@ -75,12 +99,9 @@ The application utilizes a range of technogies to delivere its functionality. Th
 
 <br>
 
-## Credits
-
-<br>
-
 ## License
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 Please refer to the [LICENSE](License doc) document.
 
 <br>

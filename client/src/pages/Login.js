@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useMutation } from "@apollo/client";
+import { useNavigate } from 'react-router-dom';
 import { Link } from "react-router-dom";
 import { LOGIN } from "../utils/mutations";
 import { setToken } from "../utils/auth";
@@ -14,6 +15,8 @@ function Login(props) {
   // mutation for logging a given user in
   const [login, { error, data }] = useMutation(LOGIN);
 
+  const navigate = useNavigate();
+
   const [showError, setShowError] = useState(false);
 
   // on form submit, call login function with data in the formState object
@@ -25,7 +28,7 @@ function Login(props) {
       });
       const token = mutationResponse.data.login.token;
       setToken(token);
-      window.location = "/profile";
+      navigate('/profile')
     } catch (e) {
       setShowError(true)
       setTimeout(() => {
