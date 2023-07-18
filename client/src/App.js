@@ -13,7 +13,6 @@ import './App.css';
 import './index.css';
 
 import Nav from './components/Nav';
-import Dashboard from './pages/Dashboard';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import ProjectsPage from './pages/Project/ProjectsIndex';
@@ -36,10 +35,6 @@ function App() {
         <div>
           <Nav />
           <Routes>
-            <Route
-              path='/'
-              element={<Dashboard />}
-            />
             <Route
               path='/login'
               element={<Login />}

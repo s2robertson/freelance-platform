@@ -10,9 +10,6 @@ import ProfileForm from './ProfileForm';
 import ProfileInfo from '../../components/ProfileInfo';
 import ProjectSearch from './ProjectSearch';
 
-import Nav from '../../components/Nav';
-import ProjectList from '../../components/ProjectList';
-
 function Profile() {
   let { userId } = useParams();
   // console.log(`Searching for userId ${userId}`);
@@ -40,13 +37,13 @@ function Profile() {
 
   if (loading) {
     return (
-      <div className="block max-w-sm p-8 mt-20 mb-10 ml-16 bg-white border border-gray-200 rounded-lg shadow-xl">
+      <div className="block max-w-sm p-8 mt-20 mb-10 ml-16 bg-gray-100 border border-gray-200 rounded-lg shadow-xl">
         Loading...
       </div>
     )
   } else if (error || !data.user) {
     return (
-      <div className="block max-w-sm p-8 mt-20 mb-10 ml-16 bg-white border border-gray-200 rounded-lg shadow-xl">
+      <div className="block max-w-sm p-8 mt-20 mb-10 ml-16 bg-gray-100 border border-gray-200 rounded-lg shadow-xl">
         Not logged in!
       </div>
     )

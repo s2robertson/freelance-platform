@@ -3,7 +3,6 @@ import { useMutation } from "@apollo/client";
 import { Link } from "react-router-dom";
 import { ADD_USER, LOGIN } from "../utils/mutations";
 import { setToken } from "../utils/auth";
-import Nav from "../components/Nav";
 
 function Signup(props) {
   // state variable to be later used for accessing form contents

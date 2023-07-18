@@ -5,6 +5,7 @@ import ProjectsList from "./ProjectsList";
 import ProjectForm from './ProjectForm';
 import { ADD_PROJECT } from '../../utils/mutations';
 import { QUERY_ALL_PROJECTS } from '../../utils/queries';
+import { loggedIn } from '../../utils/auth';
 
 const emptyProject = {
   name: '',
@@ -32,10 +33,16 @@ function ProjectsPage() {
         <h2 className='text-5xl mb-5 font-bold underline'>Your projects:</h2>
         <button
           type='button'
-          onClick={() => setViewingList(false)}
+          onClick={() => {
+            if (loggedIn())
+              setViewingList(false)
+            else
+              window.location = '/login'
+          }
+          }
           className="border border-solid border-gray-300 bg-blue-500 py-3 px-3 my-3 text-white hover:bg-blue-600 rounded-md"
         >
-          Create new project
+          {loggedIn() ? (<p>Create New Project</p>) : (<p>Login to create a project!</p>)}
         </button>
       </div>
       <div className=''>
