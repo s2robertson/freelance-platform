@@ -21,15 +21,21 @@ const ProjectsList = () => {
       <p>You currently have no projects</p>
     ) : (
       <ul className="block ml-16 max-w-4xl justify-center p-8 my-5 bg-gray-100 border border-gray-300 rounded-lg shadow-xl">
-        {data.projects.map(project => (
-          <li key={project._id} className="p-1">
-            <h3><Link to={`/project/${project._id}`}>{project.name}</Link></h3>
-            <p>{project.description}</p>
-            <p>Services needed: {project.servicesNeeded.map(service => service.name).join(', ')}</p>
-          </li>
-        ))}
+        <div className="bg-white rounded-md p-2">
+          {data.projects.map(project => (
+            <>
+              <li key={project._id} className="p-1">
+                <h3 className="border-solid w-1/5 text-center border-gray-200 border rounded-md py-1 px-3 m-3 text-black bg-gray-200 hover:bg-gray-300"><Link to={`/project/${project._id}`}>{project.name}</Link></h3>
+                <hr></hr>
+                <p><span className="font-bold">Description: </span>{project.description}</p>
+                {project.servicesNeeded.length ? (<p><span className="font-bold">Services needed: </span>{project.servicesNeeded.map(service => service.name).join(', ')}</p>) : (<p><span className="font-bold">Services needed: </span>None!</p>)}
+              </li>
+              <hr></hr>
+            </>
+          ))}
+        </div>
       </ul>
-  ));
+    ));
 };
 
 export default ProjectsList;

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useState } from 'react'
 
 import { QUERY_USERS_BY_SKILL } from "../../utils/queries";
+import { QUERY_USERS } from "../../utils/queries";
 
 function FreelancerSearch({ project }) {
   const [loadSearch, { data, error }] = useLazyQuery(QUERY_USERS_BY_SKILL);
@@ -51,7 +52,7 @@ function FreelancerSearch({ project }) {
               )}
             </ul>
           )
-        ) : null}
+        ) : <p className="bg-white">No users found</p>}
       </div>
     </>
   )
