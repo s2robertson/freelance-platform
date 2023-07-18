@@ -14,7 +14,7 @@ function ProjectDetails({ project, editCallback, currentUser }) {
       <button
         type="button"
         onClick={editCallback}
-        className="border border-solid border-gray-300 bg-blue-500 py-1 px-3 my-3 text-white hover:bg-blue-600 rounded-md"
+        className="border border-solid border-gray-300 bg-blue-500 py-3 px-3 my-3 text-white hover:bg-blue-600 rounded-md"
       >
         Edit Project
       </button>
