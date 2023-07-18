@@ -18,18 +18,24 @@ const ProjectsList = () => {
 
   return (
     data.projects.length === 0 ? (
-      <p>You currently have no projects</p>
+      <p className="block ml-16 max-w-4xl justify-center p-8 my-5 bg-gray-100 border border-gray-300 rounded-lg shadow-xl">You currently have no projects</p>
     ) : (
-      <ul className="border-2 divide-y-2 mt-1">
-        {data.projects.map(project => (
-          <li key={project._id} className="p-1">
-            <h3><Link to={`/project/${project._id}`}>{project.name}</Link></h3>
-            <p>{project.description}</p>
-            <p>Services needed: {project.servicesNeeded.map(service => service.name).join(', ')}</p>
-          </li>
-        ))}
+      <ul className="block ml-16 max-w-4xl justify-center p-8 my-5 bg-gray-100 border border-gray-300 rounded-lg shadow-xl">
+        <div className="bg-white rounded-md p-2">
+          {data.projects.map(project => (
+            <>
+              <li key={project._id} className="p-1 mb-7">
+                <button className="border-solid w-auto text-center border-gray-200 border rounded-md py-1 px-3 mb-3 mt-1 text-black bg-gray-200 hover:bg-gray-300"><Link to={`/project/${project._id}`}>{project.name}</Link></button>
+                <hr></hr>
+                <p><span className="font-bold">Description: </span>{project.description}</p>
+                {project.servicesNeeded.length ? (<p><span className="font-bold">Services needed: </span>{project.servicesNeeded.map(service => service.name).join(', ')}</p>) : (<p><span className="font-bold">Services needed: </span>None!</p>)}
+              </li>
+              <hr></hr>
+            </>
+          ))}
+        </div>
       </ul>
-  ));
+    ));
 };
 
 export default ProjectsList;

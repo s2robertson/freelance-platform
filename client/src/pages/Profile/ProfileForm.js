@@ -29,7 +29,7 @@ function ProfileForm(props) {
   return (
     <>
       <h1 className='text-5xl ml-16 mt-16'>Edit Profile</h1>
-      <div className="block max-w-sm p-8 mt-14 rounded-2xl mb-10 ml-16 bg-white border border-gray-200 rounded-lg shadow-xl card">
+      <div className="block max-w-4xl p-6 mt-14 rounded-2xl mb-10 ml-16 bg-gray-100 border border-gray-200 rounded-lg shadow-xl card">
         <Formik
           initialValues={props.user}
           validationSchema={validationSchema}
@@ -68,14 +68,14 @@ function ProfileForm(props) {
             )}
             <button
               type='submit'
-              className='border-2 p-1'
+              className='border border-solid border-gray-300 bg-green-600 py-1 px-3 mr-2 text-white hover:bg-green-700 rounded-md'
             >
               Save Changes
             </button>
             <button
               type='button'
               onClick={props.onFinished}
-              className='border-2 p-1'
+              className='border border-solid border-gray-300 bg-red-500 py-1 px-3 text-white hover:bg-red-600 rounded-md'
             >
               Cancel
             </button>

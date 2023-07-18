@@ -120,7 +120,7 @@ function Nav() {
             <div className="flex items-center justify-between">
               <a
                 className="flex-none text-2xl font-bold font-serif text-stone-400"
-                href="#"
+                href="/profile"
               >
                 Freelance Platform
               </a>
@@ -176,7 +176,7 @@ function Nav() {
                         onClick={() => {
                           clearToken();
                           alert('Goodbye!');
-                          window.location.replace('/profile');
+                          window.location.replace('/login');
                         }}
                       >
                         Logout

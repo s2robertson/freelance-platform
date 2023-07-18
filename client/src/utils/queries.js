@@ -98,6 +98,7 @@ export const QUERY_PROJECTS_BY_SERVICE = gql`
     projectsByService(services: $services) {
       _id
       name
+      description
       servicesNeeded {
         _id
         name

@@ -9,74 +9,80 @@ import FormTextArea from "./FormElements/FormTextArea";
 import stringifyReceiver from "../pages/Messages/stringifyReceiver";
 
 const validationSchema = Yup.object({
-    receiver: Yup.array(Yup.object({
-        _id: Yup.string()
-            .required(),
-        username: Yup.string()
-            .required()
-    })).min(1, 'Missing receiver(s)'),
-    subject: Yup.string()
-        .trim()
-        .required('Required'),
-    text: Yup.string()
-        .trim()
-        .required('Required')
+  receiver: Yup.array(Yup.object({
+    _id: Yup.string()
+      .required(),
+    username: Yup.string()
+      .required()
+  })).min(1, 'Missing receiver(s)'),
+  subject: Yup.string()
+    .trim()
+    .required('Required'),
+  text: Yup.string()
+    .trim()
+    .required('Required')
 })
 
 function MessageForm(props) {
-    const [sendMessage, { error }] = useMutation(SEND_MESSAGE);
+  const [sendMessage, { error }] = useMutation(SEND_MESSAGE);
 
-    const initialValues = useMemo(() => ({
-        receiver: props.receiver,
-        subject: props.subject || '',
-        text: props.text || ''
-    }), [props.receiver, props.subject, props.text]);
+  const initialValues = useMemo(() => ({
+    receiver: props.receiver,
+    subject: props.subject || '',
+    text: props.text || ''
+  }), [props.receiver, props.subject, props.text]);
 
-    return (
-        <Formik
-            initialValues={initialValues}
-            validationSchema={validationSchema}
-            onSubmit={async (values) => {
-                try {
-                    await sendMessage({
-                        variables: {
-                            ...values,
-                            receiverIds: values.receiver.map(({ _id }) => _id)
-                        }
-                    });
-                    if (props.onFinished) {
-                        props.onFinished();
-                    }
-                } catch (err) {
-                    console.error(err);
-                }
-            }}
-        >
-            <Form>
-                <p>To: {stringifyReceiver(props.receiver)}</p>
-                <FormInput id='subject' name='subject' type='text' label='Subject:' />
-                <FormTextArea id='text' name='text' label='Message content:' />
-                <button 
-                    type='submit'
-                    className='border-2 p-1'
-                >
-                    Send Message
-                </button>
-                {props.onFinished ? (
-                    <button
-                        type='button'
-                        className='border-2 p-1'
-                        onClick={props.onFinished}
-                    >
-                        Cancel
-                    </button>
-                ) : null}
-                {error ? (
-                    <p>Sending message failed</p>
-                ) : null}
-            </Form>
-        </Formik>
-    )
+  return (
+    <div className="block -ml-1 text-left max-w-4xl justify-center p-8 my-5 bg-gray-50 border border-gray-300 rounded-lg shadow-xl">
+      <Formik
+        initialValues={initialValues}
+        validationSchema={validationSchema}
+        onSubmit={async (values) => {
+          try {
+            await sendMessage({
+              variables: {
+                ...values,
+                receiverIds: values.receiver.map(({ _id }) => _id)
+              }
+            });
+            if (props.onFinished) {
+              props.onFinished();
+              alert('Message sent!')
+              window.location.reload();
+            }
+          } catch (err) {
+            console.error(err);
+          }
+        }}
+      >
+        <Form>
+          <p>To: {stringifyReceiver(props.receiver)}</p>
+          <FormInput id='subject' name='subject' type='text' label='Subject:' />
+          <FormTextArea id='text' name='text' label='Message content: ' />
+          <div className="mt-2">
+            <button
+              type='submit'
+              className="border border-solid border-gray-300 bg-blue-500 py-1 px-3 w-auto text-white hover:bg-blue-600 rounded-md"
+            >
+              Send Message
+            </button>
+            {props.onFinished ? (
+              <button
+                type='button'
+                className="border border-solid border-gray-300 bg-red-500 py-1 px-3 w-auto text-white hover:bg-red-600 rounded-md"
+                onClick={props.onFinished}
+              >
+                Cancel
+              </button>
+            ) : null}
+          </div>
+          {error ? (
+            <p className="error">Sending message failed</p>
+          ) : null}
+        </Form>
+      </Formik>
+    </div>
+  )
 }
 
 export default MessageForm;
