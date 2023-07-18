@@ -17,7 +17,6 @@ The freelance platform is a web application that connects freelancers with clien
 - [Demonstration](#demonstration)
 - [Deployed Webpage](#deployed-webpage)
 - [Technology](#technology)
-- [Additional Features to Consider](#additional-features-to-consider)
 - [Installation](#installation)
 - [Credits](#credits)
 - [License](#license)
@@ -28,7 +27,7 @@ The freelance platform is a web application that connects freelancers with clien
 ## Demonstration
 
 Application Demonstration:\
-Watch it on [Google Drive](video Link)
+Watch it on ![Google Drive](video Link)
 
 Application Preview:
 
@@ -46,11 +45,15 @@ Application Preview:
 
 ![messages](./assets/messages.png)
 
+### Login & SignUp Page
+
+![gif image of the application working.](./public/assets/images/)
+
 <br>
 
 ## Deployed Webpage
 
-Click on the logo [logo](deployed Link) to visit our site.
+[freelance-platform](deployed Link)
 
 <br>
 
@@ -87,6 +90,12 @@ Here are some additional features to consider or implement in the future. These 
 
 ## Installation
 
+- git clone - https://github.com/s2robertson/freelance-platform.git
+- Set up .env variables
+- npm install
+- node server.js (server)
+- npm start (client)
+
 <br>
 
 ## Credits
@@ -102,3 +111,5 @@ Please refer to the [LICENSE](License doc) document.
 <br>
 
 ## Contributors
+
+[Steven Robertson](https://github.com/s2robertson), [Zain Gova](https://github.com/zaingova), [Saveetha Kathiravan](https://github.com/saveetha17)
