@@ -9,11 +9,11 @@ const ProjectsList = () => {
 
   if (loading) {
     // Loading message while the data is being fetched
-    return <div>Loading...</div>;
+    return <div className="block ml-16 max-w-4xl justify-center p-8 my-5 bg-gray-100 border border-gray-300 rounded-lg shadow-xl">Loading...</div>;
   } else if (error || !data.projects) {
     // If project data is not available, display a message indicating the project was not found
     console.log('Error fetching projects: ', error, data?.projects);
-    return <div>Error fetching projects.</div>;
+    return <div className="block ml-16 max-w-4xl justify-center p-8 my-5 bg-gray-100 border border-gray-300 rounded-lg shadow-xl">Error fetching projects.</div>;
   }
 
   return (

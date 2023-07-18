@@ -4,8 +4,6 @@ import { Link } from "react-router-dom";
 import { LOGIN } from "../utils/mutations";
 import { setToken } from "../utils/auth";
 
-import Nav from "../components/Nav";
-
 function Login(props) {
   // state variable to be later used for accessing form contents
   const [formState, setFormState] = useState({

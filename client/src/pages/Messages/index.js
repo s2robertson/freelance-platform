@@ -14,19 +14,19 @@ function MessagesPage() {
 
     if (loading) {
         return (
-      <div className="block max-w-sm p-8 mt-20 mb-10 ml-16 bg-white border border-gray-200 rounded-lg shadow-xl">
+      <div className="block max-w-sm p-8 mt-20 mb-10 ml-16 bg-gray-100 border border-gray-200 rounded-lg shadow-xl">
         Loading...
       </div>
     )
     } else if (!currentUser) {
         return (
-      <div className="block max-w-sm p-8 mt-20 mb-10 ml-16 bg-white border border-gray-200 rounded-lg shadow-xl">
+      <div className="block max-w-sm p-8 mt-20 mb-10 ml-16 bg-gray-100 border border-gray-200 rounded-lg shadow-xl">
         Not logged in!
       </div>
     )
     } else if (error) {
         return (
-      <div className="block max-w-sm p-8 mt-20 mb-10 ml-16 bg-white border border-gray-200 rounded-lg shadow-xl">
+      <div className="block max-w-sm p-8 mt-20 mb-10 ml-16 bg-gray-100 border border-gray-200 rounded-lg shadow-xl">
         Error fetching messages
       </div>
     )

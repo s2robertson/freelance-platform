@@ -82,11 +82,7 @@ import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import {
   loggedIn,
-  getToken,
-  setToken,
   clearToken,
-  isTokenExpired,
-  authMiddleware,
 } from "../../utils/auth";
 function Nav() {
   const location = useLocation();
