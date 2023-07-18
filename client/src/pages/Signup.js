@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useMutation } from "@apollo/client";
+import { useNavigate } from 'react-router-dom';
 import { Link } from "react-router-dom";
 import { ADD_USER, LOGIN } from "../utils/mutations";
 import { setToken } from "../utils/auth";
@@ -16,6 +17,8 @@ function Signup(props) {
 
   const [addUser, { addUserError, addUserData }] = useMutation(ADD_USER);
   const [login, { loginError, loginData }] = useMutation(LOGIN);
+
+  const navigate = useNavigate();
 
   const [showError, setShowError] = useState(false);
   const [showErrorPasswords, setShowErrorPasswords] = useState(false);
@@ -46,7 +49,7 @@ function Signup(props) {
         const token = loginResponse.data.login.token;
         setToken(token);
 
-        window.location = "/profile";
+        navigate('/profile');
       } catch (e) {
         setShowError(true)
         setTimeout(() => {
@@ -56,9 +59,9 @@ function Signup(props) {
       }
     } else {
       setShowErrorPasswords(true)
-        setTimeout(() => {
-          setShowErrorPasswords(false)
-        }, 2000)
+      setTimeout(() => {
+        setShowErrorPasswords(false)
+      }, 2000)
     }
   };
 

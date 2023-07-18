@@ -1,3 +1,4 @@
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 # freelance-platform
 
 <!-- ![MIT License](https:Image link) -->
@@ -45,9 +46,9 @@ Application Preview:
 
 ![messages](./assets/messages.png)
 
-### Login & SignUp Page
+### SignUp Page
 
-![gif image of the application working.](./public/assets/images/)
+![signup](./assets/signup.png)
 
 <br>
 
@@ -69,7 +70,7 @@ The application utilizes a range of technogies to delivere its functionality. Th
 - Front-End Technologies:
 
   - React
-  - TailwindCSS: enehance the visual appearance and layout of the application
+  - TailwindCSS: enhance the visual appearance and layout of the application
 
 - Database:
 
@@ -98,14 +99,9 @@ Here are some additional features to consider or implement in the future. These 
 
 <br>
 
-## Credits
-
-[Steven Robertson](https://github.com/s2robertson), [Zain Gova](https://github.com/zaingova), [Saveetha Kathiravan](https://github.com/saveetha17)
-
-<br>
-
 ## License
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 Please refer to the [LICENSE](License doc) document.
 
 <br>

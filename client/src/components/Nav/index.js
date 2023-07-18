@@ -79,12 +79,14 @@
 // export default Nav;
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState } from "react";
+import { useNavigate } from 'react-router-dom'
 import { Link, useLocation } from "react-router-dom";
 import {
   loggedIn,
   clearToken,
 } from "../../utils/auth";
 function Nav() {
+  const navigate = useNavigate();
   const location = useLocation();
   const [isActive, setActive] = useState({
     profile: false,
@@ -130,9 +132,8 @@ function Nav() {
                   <li className="mr-2">
                     <Link
                       to="/profile"
-                      className={`inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-teal-500 hover:border-teal-500 ${
-                        location.pathname === "/profile" ? "active" : ""
-                      }`}
+                      className={`inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-teal-500 hover:border-teal-500 ${location.pathname === "/profile" ? "active" : ""
+                        }`}
                     >
                       Profile
                     </Link>
@@ -148,9 +149,8 @@ function Nav() {
                   <li className="mr-2">
                     <Link
                       to="/projects"
-                      className={`inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-teal-500 hover:border-teal-500 ${
-                        location.pathname === "/projects" ? "active" : ""
-                      }`}
+                      className={`inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-teal-500 hover:border-teal-500 ${location.pathname === "/projects" ? "active" : ""
+                        }`}
                     >
                       Projects
                     </Link>
@@ -158,9 +158,8 @@ function Nav() {
                   <li>
                     <Link
                       to="/messages"
-                      className={`inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-teal-500 hover:border-teal-500 ${
-                        location.pathname === "/messages" ? "active" : ""
-                      }`}
+                      className={`inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-teal-500 hover:border-teal-500 ${location.pathname === "/messages" ? "active" : ""
+                        }`}
                     >
                       Messages
                     </Link>
@@ -170,13 +169,11 @@ function Nav() {
                     <li className="mr-2">
                       <a
                         href="#"
-                        className={`inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-teal-500 hover:border-teal-500 ${
-                          location.pathname === "/logout" ? "active" : ""
-                        }`}
+                        className={`inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-teal-500 hover:border-teal-500 ${location.pathname === "/logout" ? "active" : ""
+                          }`}
                         onClick={() => {
                           clearToken();
-                          alert("Goodbye!");
-                          window.location.replace("/login");
+                          navigate('/login')
                         }}
                       >
                         Logout
@@ -186,9 +183,8 @@ function Nav() {
                     <li className="mr-2">
                       <Link
                         to="/login"
-                        className={`inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-teal-500 hover:border-teal-500 ${
-                          location.pathname === "/login" ? "active" : ""
-                        }`}
+                        className={`inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-teal-500 hover:border-teal-500 ${location.pathname === "/login" ? "active" : ""
+                          }`}
                       >
                         Login
                       </Link>
@@ -199,9 +195,8 @@ function Nav() {
                     {!loggedIn() ? (
                       <Link
                         to="/signup"
-                        className={`inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-teal-500 hover:border-teal-500 ${
-                          location.pathname === "/signup" ? "active" : ""
-                        }`}
+                        className={`inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-teal-500 hover:border-teal-500 ${location.pathname === "/signup" ? "active" : ""
+                          }`}
                       >
                         Sign Up!
                       </Link>

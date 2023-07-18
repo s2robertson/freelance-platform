@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useMutation } from '@apollo/client';
+import { useNavigate } from 'react-router-dom'
 
 import ProjectsList from "./ProjectsList";
 import ProjectForm from './ProjectForm';
@@ -14,6 +15,7 @@ const emptyProject = {
 }
 
 function ProjectsPage() {
+  const navigate = useNavigate();
   const [viewingList, setViewingList] = useState(true);
   const [addProject] = useMutation(ADD_PROJECT, {
     update(cache, { data }) {
@@ -37,7 +39,7 @@ function ProjectsPage() {
             if (loggedIn())
               setViewingList(false)
             else
-              window.location = '/login'
+              navigate('/login')
           }
           }
           className="border border-solid border-gray-300 bg-blue-500 py-3 px-3 my-3 text-white hover:bg-blue-600 rounded-md"
