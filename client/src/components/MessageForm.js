@@ -1,5 +1,6 @@
 import { useMemo } from "react";
 import { useMutation } from "@apollo/client";
+import { useNavigate } from 'react-router-dom'
 import { Formik, Form } from "formik";
 import * as Yup from 'yup';
 
@@ -24,6 +25,8 @@ const validationSchema = Yup.object({
 })
 
 function MessageForm(props) {
+  const navigate = useNavigate();
+
   const [sendMessage, { error }] = useMutation(SEND_MESSAGE);
 
   const initialValues = useMemo(() => ({
@@ -47,7 +50,7 @@ function MessageForm(props) {
             });
             if (props.onFinished) {
               props.onFinished();
-              window.location.reload();
+              navigate(0);
             }
           } catch (err) {
             console.error(err);
