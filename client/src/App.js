@@ -19,6 +19,7 @@ import ProjectsPage from './pages/Project/ProjectsIndex';
 import Profile from './pages/Profile';
 import Project from './pages/Project/ProjectIndex';
 import Messages from './pages/Messages/'
+import { loggedIn } from './utils/auth';
 
 const httpLink = new HttpLink({ uri: '/graphql' });
 const client = new ApolloClient({
@@ -35,6 +36,10 @@ function App() {
         <div>
           <Nav />
           <Routes>
+            <Route
+              path='/'
+              element={loggedIn() ? <Profile /> : <Login />}
+            />
             <Route
               path='/login'
               element={<Login />}
