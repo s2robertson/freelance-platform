@@ -17,6 +17,9 @@ function Signup(props) {
   const [addUser, { addUserError, addUserData }] = useMutation(ADD_USER);
   const [login, { loginError, loginData }] = useMutation(LOGIN);
 
+  const [showError, setShowError] = useState(false);
+  const [showErrorPasswords, setShowErrorPasswords] = useState(false);
+
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
@@ -32,6 +35,8 @@ function Signup(props) {
           },
         });
 
+
+
         const loginResponse = await login({
           variables: { email: formState.email, password: formState.password },
         });
@@ -41,14 +46,19 @@ function Signup(props) {
         const token = loginResponse.data.login.token;
         setToken(token);
 
-        alert("Thanks for signing up! Redirecting you to your profile...");
         window.location = "/profile";
       } catch (e) {
-        alert("Error signing up...");
+        setShowError(true)
+        setTimeout(() => {
+          setShowError(false)
+        }, 2000)
         console.log(e);
       }
     } else {
-      alert("Error signing up... Passwords do not match!");
+      setShowErrorPasswords(true)
+        setTimeout(() => {
+          setShowErrorPasswords(false)
+        }, 2000)
     }
   };
 
@@ -64,20 +74,20 @@ function Signup(props) {
   const handleCheckboxSwitch = () => {
     formState.isEmployer
       ? setFormState({
-          ...formState,
-          isEmployer: false,
-        })
+        ...formState,
+        isEmployer: false,
+      })
       : setFormState({
-          ...formState,
-          isEmployer: true,
-        });
+        ...formState,
+        isEmployer: true,
+      });
     //console.log(formState.isEmployer);
   };
 
   return (
     <>
       {console.log(formState)}
-      <div className="p-32 my-20 mx-96 bg-sky-950 text-white border-2 rounded-3xl shadow-xl">
+      <div className="p-16 my-20 flex-row max-w-5xl ml-20 bg-sky-950 text-white border-2 rounded-3xl shadow-xl">
         <div>
           <h1 className="text-3xl mb-10">Sign Up</h1>
         </div>
@@ -171,6 +181,10 @@ function Signup(props) {
               </a>
             </label>
           </div>
+
+          <p className={`mb-5 font-bold text-indigo-400 ${showError ? ('visible') : ('hidden')}`}>Error signing up...</p>
+          <p className={`mb-5 font-bold text-indigo-400 ${showErrorPasswords ? ('visible') : ('hidden')}`}>Passwords must match!</p>
+
           <button
             type="submit"
             class="text-white bg-gray-500 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
