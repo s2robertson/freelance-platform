@@ -20,7 +20,7 @@ const ProjectsList = () => {
     data.projects.length === 0 ? (
       <p>You currently have no projects</p>
     ) : (
-      <ul className="border-2 divide-y-2 mt-1">
+      <ul className="block ml-16 max-w-4xl justify-center p-8 my-5 bg-gray-100 border border-gray-300 rounded-lg shadow-xl">
         {data.projects.map(project => (
           <li key={project._id} className="p-1">
             <h3><Link to={`/project/${project._id}`}>{project.name}</Link></h3>

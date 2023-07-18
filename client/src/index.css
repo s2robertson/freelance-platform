@@ -29,7 +29,7 @@ label.block.w-full {
 }
 
 input.block.w-full {
-  background-color: #f8f8f8;
+  background-color: #fff;
   border: 1px solid #ececec;
   color: #3f3f3f;
   outline-color: #ececec;
@@ -37,25 +37,25 @@ input.block.w-full {
 }
 
 input.block.w-full:focus {
-  background-color: #f8f8f8;
+  background-color: #fff;
   border: 1px solid #f8f8f8 !important;
   outline: 1px solid #f8f8f8;
-  color: #858585;
+  color: #a3a3a3;
 }
 
-textarea#profileDescription {
-  background-color: #f8f8f8;
+textarea {
+  background-color: #fff;
   border: 1px solid #ececec;
   color: #3f3f3f;
   outline-color: #ececec;
   transition: 0.5s
 }
 
-textarea#profileDescription:focus {
-  background-color: #f8f8f8;
+textarea:focus {
+  background-color: #fff;
   border: 1px solid #f8f8f8 !important;
   outline: 1px solid #f8f8f8;
-  color: #858585;
+  color: #a3a3a3;
 }
 
 .card {

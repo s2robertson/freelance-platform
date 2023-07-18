@@ -51,7 +51,7 @@ function MessagesPage() {
             )
         }
     } else {
-        return <h2>You currently have no messages</h2>;
+        return <div className="block max-w-4xl p-8 mt-14 rounded-2xl mb-10 ml-16 bg-gray-100 border border-gray-300 rounded-lg shadow-xl">You currently have no messages</div>;
     }
 }
 
