@@ -45,7 +45,7 @@ The freelance platform is a web application that connects freelancers with clien
 
 ## Deployed Webpage
 
-[freelance-platform](deployed Link)
+[freelance-platform](https://freelance-platform-5f9607a54217.herokuapp.com)
 
 <br>
 
