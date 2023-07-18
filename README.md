@@ -17,7 +17,6 @@ The freelance platform is a web application that connects freelancers with clien
 - [Demonstration](#demonstration)
 - [Deployed Webpage](#deployed-webpage)
 - [Technology](#technology)
-- [Additional Features to Consider](#additional-features-to-consider)
 - [Installation](#installation)
 - [Credits](#credits)
 - [License](#license)
@@ -28,7 +27,7 @@ The freelance platform is a web application that connects freelancers with clien
 ## Demonstration
 
 Application Demonstration:\
-Watch it on [Google Drive](video Link)
+Watch it on ![Google Drive](video Link)
 
 Application Preview:
 
@@ -42,11 +41,15 @@ Application Preview:
 
 ![gif image of the application working.](./public/assets/images/)
 
+### Login & SignUp Page
+
+![gif image of the application working.](./public/assets/images/)
+
 <br>
 
 ## Deployed Webpage
 
-Click on the logo [logo](deployed Link) to visit our site.
+[freelance-platform](deployed Link)
 
 <br>
 
@@ -54,33 +57,21 @@ Click on the logo [logo](deployed Link) to visit our site.
 
 The application utilizes a range of technogies to delivere its functionality. These include:
 
-- Back-End Technologies:
-
-  - Node.js: JavaScript runtime
-  - Express: web application framework for Node.js
-
-- Front-End Technologies:
-
-  - React
-  - TailwindCSS: enehance the visual appearance and layout of the application
-
-- Database:
-
-  - MongoDB: handle and store data
-
-<br>
-
-## Additional Features to Consider
-
-Here are some additional features to consider or implement in the future. These include:
-
-1.
-2.
-3.
+- Back-End Technologies
+  - Node.js, Express, MongoDB, Mongoose(ODM), GraphQL, Apollo Server, JSON Web Tokens (JWT), bcrypt
+    <br>
+- Front-End Technologies
+  - React, React Router, Tailwind CSS, Apollo Client, Formik, React Hook Form
 
 <br>
 
 ## Installation
+
+- git clone - https://github.com/s2robertson/freelance-platform.git
+- Set up .env variables
+- npm install
+- node server.js (server)
+- npm start (client)
 
 <br>
 
@@ -95,3 +86,5 @@ Please refer to the [LICENSE](License doc) document.
 <br>
 
 ## Contributors
+
+[Steven Robertson](https://github.com/s2robertson), [Zain Gova](https://github.com/zaingova), [Saveetha Kathiravan](https://github.com/saveetha17)
