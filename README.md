@@ -32,15 +32,19 @@ Watch it on [Google Drive](video Link)
 
 Application Preview:
 
-![gif image of the application working.](./public/assets/images/)
-
 ### Profile Page
 
-![gif image of the application working.](./public/assets/images/)
+![profile](./assets/profile.png)
 
 ### Project Page
 
-![gif image of the application working.](./public/assets/images/)
+![new project](./assets/newproj.png)
+
+![project details](./assets/projdet.png)
+
+### Messages Page
+
+![messages](./assets/messages.png)
 
 <br>
 
@@ -74,9 +78,10 @@ The application utilizes a range of technogies to delivere its functionality. Th
 
 Here are some additional features to consider or implement in the future. These include:
 
-1.
-2.
-3.
+1. Implement Advanced Search and Filtering
+2. Integrate Real-time Communication
+3. Offer Project Management Tools
+4. Implement payment integration
 
 <br>
 
@@ -85,6 +90,8 @@ Here are some additional features to consider or implement in the future. These 
 <br>
 
 ## Credits
+
+[Steven Robertson]()
 
 <br>
 
