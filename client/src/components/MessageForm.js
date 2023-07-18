@@ -47,7 +47,6 @@ function MessageForm(props) {
             });
             if (props.onFinished) {
               props.onFinished();
-              alert('Message sent!')
               window.location.reload();
             }
           } catch (err) {

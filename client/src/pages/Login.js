@@ -14,6 +14,8 @@ function Login(props) {
   // mutation for logging a given user in
   const [login, { error, data }] = useMutation(LOGIN);
 
+  const [showError, setShowError] = useState(false);
+
   // on form submit, call login function with data in the formState object
   const handleFormSubmit = async (event) => {
     event.preventDefault();
@@ -23,10 +25,12 @@ function Login(props) {
       });
       const token = mutationResponse.data.login.token;
       setToken(token);
-      alert("Welcome back!");
       window.location = "/profile";
     } catch (e) {
-      alert("Error logging in...");
+      setShowError(true)
+      setTimeout(() => {
+        setShowError(false)
+      }, 2000)
       console.log(e);
     }
   };
@@ -40,8 +44,8 @@ function Login(props) {
   };
 
   return (
-    <>
-      <div className="p-32 my-20 mx-96 justify-center bg-sky-950 text-white border-2 rounded-3xl shadow-xl">
+    <div>
+      <div className="p-16 my-20 flex-row max-w-5xl ml-20 bg-sky-950 text-white border-2 rounded-3xl shadow-xl">
         <div>
           <h1 className="text-3xl mb-10">Login</h1>
         </div>
@@ -81,6 +85,8 @@ function Login(props) {
             ></input>
           </div>
 
+          <p className={`mb-5 font-bold text-indigo-400 ${showError ? ('visible') : ('hidden')}`}>Error logging in...</p>
+
           <button
             type="submit"
             className="text-white bg-gray-500 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
@@ -94,7 +100,7 @@ function Login(props) {
           </div>
         </form>
       </div>
-    </>
+    </div>
   );
 }
 
