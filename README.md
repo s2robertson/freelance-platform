@@ -91,7 +91,7 @@ Here are some additional features to consider or implement in the future. These 
 
 ## Credits
 
-[Steven Robertson]()
+[Steven Robertson](https://github.com/s2robertson), [Zain Gova](https://github.com/zaingova), [Saveetha Kathiravan](https://github.com/saveetha17)
 
 <br>
 
