@@ -40,24 +40,25 @@ function ProjectDetails({ project, editCallback, currentUser }) {
         {messageButton}
 
         <div className="bg-white mb-2 p-2">
-          <p>Name: <span className="text-gray-400">{project.name}</span></p>
-          <p>Description: <span className="text-gray-400">{project.description}</span></p>
-          <p>Owner: <span className="text-gray-400">{project.owner.username}</span></p>
+          <p><span className="font-bold">Name:</span> <span className="text-gray-900">{project.name}</span></p>
+          <p><span className="font-bold">Description:</span> <span className="text-gray-900">{project.description}</span></p>
+          <p><span className="font-bold">Owner:</span> <span className="text-gray-900">{project.owner.username}</span></p>
         </div>
 
         <div className="bg-white mb-2 p-2">
-          <p>Freelancers: <span className="text-gray-400">{project.freelancers.map(user => user.username).join(', ')}</span></p>
-          <p>Due Date: <span className="text-gray-400">{project.dueDate}</span></p>
-          <p>Budget: <span className="text-gray-400">${project.budget}</span></p>
+          <p><span className="font-bold">Freelancers:</span> <span className="text-gray-900">{project.freelancers.map(user => user.username).join(', ')}</span></p>
+          <p><span className="font-bold">Due Date:</span> <span className="text-gray-900">{project.dueDate}</span></p>
+          <p><span className="font-bold">Budget:</span> <span className="text-gray-900">${project.budget}</span></p>
         </div>
 
         <div className="bg-white mb-2 p-2">
-          <p>Services Needed: <span className="text-gray-400">{project.servicesNeeded.map(service => service.name).join(', ')}</span></p>
+          <p><span className="font-bold">Services Needed:</span> <span className="text-gray-900">{project.servicesNeeded.map(service => service.name).join(', ')}</span></p>
+          <hr></hr>
           <p><span className="font-bold italic">{project.seekingFreelancers ? 'Currently' : 'Not '} seeking freelancers</span></p>
         </div>
 
       </div>
-      <div className=" ml-14 max-w-4xl text-center">
+      <div className="max-w-4xl ml-16 text-center">
         {searchComponent}
         {showMessageForm ? (
           <MessageForm receiver={[project.owner]} onFinished={() => setShowMessageForm(false)} />
