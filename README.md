@@ -15,22 +15,13 @@ The freelance platform is a web application that connects freelancers with clien
 
 - [Description](#description)
 - [Table of Contents](#table-of-contents)
-- [Demonstration](#demonstration)
 - [Deployed Webpage](#deployed-webpage)
 - [Technology](#technology)
 - [Installation](#installation)
-- [Credits](#credits)
 - [License](#license)
 - [Contributors](#contributors)
 
 <br>
-
-## Demonstration
-
-Application Demonstration:\
-Watch it on ![Google Drive](video Link)
-
-Application Preview:
 
 ### Profile Page
 
